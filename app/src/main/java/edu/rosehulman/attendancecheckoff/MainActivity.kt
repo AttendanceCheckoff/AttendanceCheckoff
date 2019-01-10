@@ -1,34 +1,35 @@
 package edu.rosehulman.attendancecheckoff
 
 import android.os.Bundle
-import android.support.design.widget.BottomNavigationView
+import android.support.v4.app.Fragment
 import android.support.v7.app.AppCompatActivity
+import edu.rosehulman.attendancecheckoff.overview.clubs.ClubsFragment
+import edu.rosehulman.attendancecheckoff.overview.events.EventsFragment
 import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity() {
-
-    private val mOnNavigationItemSelectedListener = BottomNavigationView.OnNavigationItemSelectedListener { item ->
-        when (item.itemId) {
-            R.id.navigation_home -> {
-                message.setText(R.string.title_home)
-                return@OnNavigationItemSelectedListener true
-            }
-            R.id.navigation_dashboard -> {
-                message.setText(R.string.title_dashboard)
-                return@OnNavigationItemSelectedListener true
-            }
-            R.id.navigation_notifications -> {
-                message.setText(R.string.title_notifications)
-                return@OnNavigationItemSelectedListener true
-            }
-        }
-        false
-    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener)
+        bottom_navigation.setOnNavigationItemSelectedListener { item ->
+            var fragment: Fragment = ClubsFragment()
+            when (item.itemId) {
+                R.id.navigation_home -> {
+                    fragment = ClubsFragment()
+                }
+                R.id.navigation_dashboard -> {
+                    fragment = EventsFragment()
+                }
+                R.id.navigation_notifications -> {
+                }
+                else -> {
+                    fragment = ClubsFragment()
+                }
+            }
+            supportFragmentManager.beginTransaction().replace(R.id.content, fragment).commit()
+            true
+        }
     }
 }

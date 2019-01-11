@@ -12,9 +12,7 @@ class ClubsAdapter: RecyclerView.Adapter<ClubViewHolder>() {
         TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
 
-    override fun getItemCount(): Int {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
-    }
+    override fun getItemCount() = clubs.size
 
     override fun onBindViewHolder(p0: ClubViewHolder, p1: Int) {
         TODO("not implemented") //To change body of created functions use File | Settings | File Templates.

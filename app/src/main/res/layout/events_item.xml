@@ -9,12 +9,12 @@
                     android:layout_margin="10dp">
         <TextView
                 android:id="@+id/events_item_name"
-                android:text="Event Title"
+                android:text="@string/event_item_name_default"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"/>
         <TextView
                 android:id="@+id/events_item_date"
-                android:text="01/01/2019"
+                android:text="@string/events_item_date_default"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="5dp"

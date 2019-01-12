@@ -7,18 +7,28 @@
     <RelativeLayout android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_margin="10dp">
+        <TextView
+                android:text="@string/role"
+                android:id="@+id/role"
+                android:layout_below="@id/official_member_item_name"
+                android:layout_toRightOf="@id/profile_image"
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="3dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                />
         <ImageView
                 android:id="@+id/member_active"
                 android:layout_toLeftOf="@id/email_button"
-                android:layout_width="20dp"
-                android:layout_height="20dp"
+                android:layout_width="25dp"
+                android:layout_height="25dp"
                 android:layout_centerVertical="true"
                 android:layout_marginRight="10dp"
                 tools:srcCompat="@tools:sample/avatars[0]"/>
 
         <ImageButton
                 android:id="@+id/email_button"
-                android:text="Email"
+                android:text="@string/email"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
@@ -26,17 +36,19 @@
                 android:layout_alignParentRight="true"/>
         <TextView
                 android:id="@+id/official_member_item_name"
-                android:text="Official/Member Name"
-                android:layout_toRightOf="@id/member_image"
+                android:text="@string/official_member_name"
+                android:layout_toRightOf="@id/profile_image"
+                android:layout_marginLeft="10dp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"/>
-        <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerVertical="true"
-                tools:srcCompat="@tools:sample/avatars[0]"
-                android:id="@+id/member_image"
-        />
+        <de.hdodenhof.circleimageview.CircleImageView
+                xmlns:app="http://schemas.android.com/apk/res-auto"
+                android:id="@+id/profile_image"
+                android:layout_width="25dp"
+                android:layout_height="25dp"
+                android:src="@drawable/official_picture"
+                app:civ_border_width="2dp"
+                app:civ_border_color="#FF000000"/>
     </RelativeLayout>
 </android.support.v7.widget.CardView>

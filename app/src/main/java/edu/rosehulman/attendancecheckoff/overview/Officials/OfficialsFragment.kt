@@ -1,4 +1,4 @@
-package edu.rosehulman.attendancecheckoff.club
+package edu.rosehulman.attendancecheckoff.overview.Officials
 
 import android.os.Bundle
 import android.support.v4.app.Fragment

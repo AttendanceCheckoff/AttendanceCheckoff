@@ -3,6 +3,7 @@ package edu.rosehulman.attendancecheckoff
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.support.v7.app.AppCompatActivity
+import edu.rosehulman.attendancecheckoff.model.Club
 import edu.rosehulman.attendancecheckoff.overview.clubs.ClubsFragment
 import edu.rosehulman.attendancecheckoff.overview.events.EventsFragment
 import kotlinx.android.synthetic.main.activity_main.*
@@ -13,19 +14,21 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
+        supportFragmentManager.beginTransaction().replace(R.id.content, ClubsFragment()).commit()
+
         bottom_navigation.setOnNavigationItemSelectedListener { item ->
-            var fragment: Fragment = ClubsFragment()
-            when (item.itemId) {
+            val fragment: Fragment = when (item.itemId) {
                 R.id.navigation_home -> {
-                    fragment = ClubsFragment()
+                    ClubsFragment()
                 }
                 R.id.navigation_dashboard -> {
-                    fragment = EventsFragment()
+                    EventsFragment()
                 }
                 R.id.navigation_notifications -> {
+                    IDFragment()
                 }
                 else -> {
-                    fragment = ClubsFragment()
+                    ClubsFragment()
                 }
             }
             supportFragmentManager.beginTransaction().replace(R.id.content, fragment).commit()

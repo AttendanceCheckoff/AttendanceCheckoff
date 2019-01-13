@@ -8,16 +8,13 @@ data class Event(
     val name: String,
     val dateTime: Date,
     val attendedMembers: ArrayList<User>,
-    val description: String,
-    val quarter: Quarter
-) : Parcelable {
+    val description: String) : Parcelable {
 
     constructor(parcel: Parcel) : this(
         parcel.readString(),
         Date(parcel.readLong()),
         parcel.readArrayList(User::class.java.classLoader) as ArrayList<User>,
-        parcel.readString(),
-        parcel.readParcelable(Quarter.javaClass.classLoader)
+        parcel.readString()
     )
 
     override fun writeToParcel(parcel: Parcel, flags: Int) {
@@ -25,7 +22,6 @@ data class Event(
         parcel.writeLong(dateTime.time)
         parcel.writeList(attendedMembers)
         parcel.writeString(description)
-        parcel.writeParcelable(quarter, 0)
     }
 
     override fun describeContents() = 0

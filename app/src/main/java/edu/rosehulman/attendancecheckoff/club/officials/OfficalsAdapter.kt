@@ -1,4 +1,4 @@
-package edu.rosehulman.attendancecheckoff.overview.Officials
+package edu.rosehulman.attendancecheckoff.club.officials
 
 import android.content.Context
 import android.support.v7.widget.RecyclerView
@@ -6,7 +6,6 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import edu.rosehulman.attendancecheckoff.R
 import edu.rosehulman.attendancecheckoff.model.User
-import kotlinx.android.synthetic.main.officials_member_item.view.*
 
 class OfficialsAdapter(var context: Context?): RecyclerView.Adapter<OfficialsViewHolder>() {
     var officials = ArrayList<User>()

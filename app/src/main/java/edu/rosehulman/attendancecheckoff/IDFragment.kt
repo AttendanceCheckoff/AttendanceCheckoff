@@ -24,7 +24,7 @@ class IDFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_id, container, false)
+        return inflater.inflate(R.layout.id_fragment, container, false)
     }
 
 

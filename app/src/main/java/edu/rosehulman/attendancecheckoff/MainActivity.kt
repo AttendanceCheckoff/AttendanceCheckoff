@@ -3,16 +3,15 @@ package edu.rosehulman.attendancecheckoff
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.support.v7.app.AppCompatActivity
-import edu.rosehulman.attendancecheckoff.model.Club
 import edu.rosehulman.attendancecheckoff.overview.clubs.ClubsFragment
 import edu.rosehulman.attendancecheckoff.overview.events.EventsFragment
-import kotlinx.android.synthetic.main.activity_main.*
+import kotlinx.android.synthetic.main.main_activity.*
 
 class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
+        setContentView(R.layout.main_activity)
 
         supportFragmentManager.beginTransaction().replace(R.id.content, ClubsFragment()).commit()
 

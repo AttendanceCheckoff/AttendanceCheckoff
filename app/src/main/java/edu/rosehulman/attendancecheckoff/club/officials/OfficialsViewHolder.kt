@@ -1,4 +1,4 @@
-package edu.rosehulman.attendancecheckoff.overview.Officials
+package edu.rosehulman.attendancecheckoff.club.officials
 
 import android.support.v7.widget.RecyclerView
 import android.view.View

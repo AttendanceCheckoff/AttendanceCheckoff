@@ -10,14 +10,14 @@
         tools:context=".club.ClubActivity">
 
     <android.support.design.widget.AppBarLayout
-            android:id="@+id/appbar"
+            android:id="@+id/club_appbar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:paddingTop="@dimen/appbar_padding_top"
             android:theme="@style/AppTheme.AppBarOverlay">
 
         <android.support.v7.widget.Toolbar
-                android:id="@+id/toolbar"
+                android:id="@+id/club_toolbar"
                 app:title="@string/app_name"
                 android:layout_width="match_parent"
                 android:layout_height="?attr/actionBarSize"

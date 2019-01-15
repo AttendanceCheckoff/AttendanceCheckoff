@@ -9,10 +9,23 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import edu.rosehulman.attendancecheckoff.R
+import edu.rosehulman.attendancecheckoff.model.Club
+
+const val ARG_CLUB = "club"
 
 class OfficialsFragment : Fragment() {
 
     val adapter by lazy { OfficialsAdapter(activity) }
+
+    lateinit var club: Club
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        arguments?.let {
+            club = it.getParcelable(ARG_CLUB)!!
+            adapter.officials = club.officials.toList()
+        }
+    }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         return (inflater.inflate(R.layout.fragment_recycler_view, container, false) as RecyclerView).apply {
@@ -20,5 +33,15 @@ class OfficialsFragment : Fragment() {
             adapter = this@OfficialsFragment.adapter
             addItemDecoration(DividerItemDecoration(activity, LinearLayoutManager.VERTICAL))
         }
+    }
+
+    companion object {
+        @JvmStatic
+        fun newInstance(club: Club) =
+            OfficialsFragment().apply {
+                arguments = Bundle().apply {
+                    putParcelable(ARG_CLUB, club)
+                }
+            }
     }
 }

@@ -36,5 +36,4 @@ data class Club(
             return arrayOfNulls(size)
         }
     }
-
 }

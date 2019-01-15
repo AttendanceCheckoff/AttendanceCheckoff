@@ -9,7 +9,7 @@ import edu.rosehulman.attendancecheckoff.model.User
 
 class OfficialsAdapter(var context: Context?) : RecyclerView.Adapter<OfficialsViewHolder>() {
 
-    var officials = ArrayList<User>()
+    var officials: List<Pair<User, String>> = ArrayList()
 
     override fun onCreateViewHolder(parent: ViewGroup, position: Int): OfficialsViewHolder {
         val view = LayoutInflater.from(context).inflate(R.layout.officials_member_item, parent, false)

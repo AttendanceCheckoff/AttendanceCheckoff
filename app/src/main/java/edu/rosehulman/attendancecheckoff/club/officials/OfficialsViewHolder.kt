@@ -8,7 +8,7 @@ import kotlinx.android.synthetic.main.officials_member_item.view.*
 class OfficialsViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
 
-    fun bind(user: User) {
-        itemView.official_member_item_name.text = user.name
+    fun bind(official: Pair<User, String>) {
+        itemView.official_member_item_name.text = official.first.name
     }
 }

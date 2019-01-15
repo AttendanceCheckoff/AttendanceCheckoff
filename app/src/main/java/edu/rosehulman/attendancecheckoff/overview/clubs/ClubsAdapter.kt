@@ -7,6 +7,7 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import edu.rosehulman.attendancecheckoff.R
 import edu.rosehulman.attendancecheckoff.club.ClubActivity
+import edu.rosehulman.attendancecheckoff.util.Constants
 import edu.rosehulman.attendancecheckoff.util.Utils
 
 class ClubsAdapter(val context: Context?) : RecyclerView.Adapter<ClubViewHolder>() {
@@ -26,7 +27,7 @@ class ClubsAdapter(val context: Context?) : RecyclerView.Adapter<ClubViewHolder>
 
     fun selectClub(position: Int) {
         val intent = Intent(context, ClubActivity::class.java).apply {
-            putExtra("CLUB", clubs[position])
+            putExtra(Constants.ARG_INTENT_CLUB, clubs[position])
         }
         context?.startActivity(intent)
     }

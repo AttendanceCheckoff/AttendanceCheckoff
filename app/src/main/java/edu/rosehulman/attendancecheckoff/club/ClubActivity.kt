@@ -9,7 +9,10 @@ import android.support.v7.app.AppCompatActivity
 import android.view.Menu
 import android.view.MenuItem
 import edu.rosehulman.attendancecheckoff.R
+import edu.rosehulman.attendancecheckoff.club.history.HistoryFragment
+import edu.rosehulman.attendancecheckoff.club.members.MembersFragment
 import edu.rosehulman.attendancecheckoff.club.officials.OfficialsFragment
+import edu.rosehulman.attendancecheckoff.club.personal.PersonalFragment
 import kotlinx.android.synthetic.main.club_activity.*
 
 class ClubActivity : AppCompatActivity() {

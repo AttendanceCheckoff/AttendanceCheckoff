@@ -26,5 +26,6 @@
     <string name="tab_item_members_title">Members</string>
     <string name="tab_item_personal_title">Personal</string>
     <string name="tab_item_history_title">History</string>
+    <string name="qr_code_of_current_user_description">QR Code of current user</string>
 
 </resources>

@@ -22,7 +22,7 @@ class ClubsAdapter(val context: Context?) : RecyclerView.Adapter<ClubViewHolder>
     override fun getItemCount() = clubs.size
 
     override fun onBindViewHolder(holder: ClubViewHolder, position: Int) {
-        holder.bind(clubs[position])
+//        holder.bind(clubs[position])
     }
 
     fun selectClub(position: Int) {

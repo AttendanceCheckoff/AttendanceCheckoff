@@ -8,18 +8,19 @@ data class User(
     val name: String,
     val major: String,
     val year: String,
-    val clubs: ArrayList<Club>,
-    val events: ArrayList<Event>
+    val clubs: ArrayList<String>
 ) : Parcelable {
+    var id: String = ""
 
     constructor(parcel: Parcel) : this(
         parcel.readString(),
         parcel.readString(),
         parcel.readString(),
         parcel.readString(),
-        parcel.readArrayList(Club::class.java.classLoader) as ArrayList<Club>,
-        parcel.readArrayList(Event::class.java.classLoader) as ArrayList<Event>
-    )
+        parcel.readArrayList(String::class.java.classLoader) as ArrayList<String>
+    ) {
+        id = parcel.readString()
+    }
 
     override fun writeToParcel(parcel: Parcel, flags: Int) {
         parcel.writeString(username)
@@ -27,15 +28,21 @@ data class User(
         parcel.writeString(major)
         parcel.writeString(year)
         parcel.writeList(clubs)
-        parcel.writeList(events)
+        parcel.writeString(id)
     }
 
-    override fun describeContents() = 0
+    override fun describeContents(): Int {
+        return 0
+    }
 
     companion object CREATOR : Parcelable.Creator<User> {
-        override fun createFromParcel(parcel: Parcel) = User(parcel)
+        override fun createFromParcel(parcel: Parcel): User {
+            return User(parcel)
+        }
 
-        override fun newArray(size: Int): Array<User?> = arrayOfNulls(size)
+        override fun newArray(size: Int): Array<User?> {
+            return arrayOfNulls(size)
+        }
     }
 
 }

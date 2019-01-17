@@ -23,7 +23,7 @@ class OfficialsFragment : Fragment() {
         super.onCreate(savedInstanceState)
         arguments?.let {
             club = it.getParcelable(ARG_CLUB)!!
-            adapter.officials = club.officials.toList()
+//            adapter.officials = club.officials.toList()
         }
     }
 

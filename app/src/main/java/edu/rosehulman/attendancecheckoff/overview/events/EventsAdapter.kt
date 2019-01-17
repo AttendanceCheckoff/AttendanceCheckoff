@@ -11,7 +11,7 @@ import edu.rosehulman.attendancecheckoff.util.Utils
 
 class EventsAdapter(val context: Context?) : RecyclerView.Adapter<EventsViewHolder>() {
 
-    val events = Utils.testUser.events
+    val events = ArrayList<String>()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): EventsViewHolder {
         val view = LayoutInflater.from(context).inflate(R.layout.events_item, parent, false)
@@ -21,7 +21,7 @@ class EventsAdapter(val context: Context?) : RecyclerView.Adapter<EventsViewHold
     override fun getItemCount() = events.size
 
     override fun onBindViewHolder(holder: EventsViewHolder, position: Int) {
-        holder.bind(events[position])
+//        holder.bind(events[position])
     }
 
     fun selectEvent(position: Int) {

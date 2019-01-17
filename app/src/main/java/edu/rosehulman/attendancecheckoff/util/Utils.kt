@@ -8,17 +8,11 @@ import java.util.*
 object Utils {
 
     val testClub = Club(
-        "RHA",
-        arrayListOf(),
-        arrayListOf(),
-        emptyMap()
+        "RHA"
     )
 
     val testClub2 = Club(
-        "Soccer",
-        arrayListOf(),
-        arrayListOf(),
-        emptyMap()
+        "Soccer"
     )
 
     val testEvent = Event(
@@ -33,7 +27,6 @@ object Utils {
         "Sebastian Harner",
         "SE",
         "2019",
-        arrayListOf(testClub, testClub2),
-        arrayListOf(testEvent)
+        arrayListOf("","")
     )
 }

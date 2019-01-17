@@ -2,30 +2,25 @@ package edu.rosehulman.attendancecheckoff.model
 
 import android.os.Parcel
 import android.os.Parcelable
+import com.google.firebase.firestore.Exclude
 
 data class Club(
-    val name: String,
-    val members: ArrayList<User>,
-    val events: ArrayList<Event>,
-    val officials: Map<User, String> = HashMap()
+    val name: String
 ) : Parcelable {
+    @get: Exclude var id: String =""
 
-    constructor(parcel: Parcel) : this(
-        parcel.readString(),
-        parcel.readArrayList(User::class.java.classLoader) as ArrayList<User>,
-        parcel.readArrayList(Event::class.java.classLoader) as ArrayList<Event>
-    ) {
-        parcel.readMap(officials, String::class.java.classLoader)
+    constructor(parcel: Parcel) : this(parcel.readString()) {
+        id = parcel.readString()
     }
 
     override fun writeToParcel(parcel: Parcel, flags: Int) {
         parcel.writeString(name)
-        parcel.writeList(members)
-        parcel.writeList(events)
-        parcel.writeMap(officials)
+        parcel.writeString(id)
     }
 
-    override fun describeContents() = 0
+    override fun describeContents(): Int {
+        return 0
+    }
 
     companion object CREATOR : Parcelable.Creator<Club> {
         override fun createFromParcel(parcel: Parcel): Club {
@@ -36,4 +31,6 @@ data class Club(
             return arrayOfNulls(size)
         }
     }
+
+
 }

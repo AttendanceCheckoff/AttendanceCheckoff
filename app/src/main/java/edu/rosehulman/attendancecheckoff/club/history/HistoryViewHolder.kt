@@ -15,6 +15,6 @@ class HistoryViewHolder(itemView: View, adapter: HistoryAdapter) : RecyclerView.
 
     fun bind(event: Event) {
         itemView.events_item_name.text = event.name
-        itemView.events_item_date.text = event.dateTime.date.toString()
+        itemView.events_item_date.text = event.dateTime.toString()
     }
 }

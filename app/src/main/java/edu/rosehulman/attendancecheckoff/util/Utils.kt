@@ -1,9 +1,9 @@
 package edu.rosehulman.attendancecheckoff.util
 
+import com.google.firebase.Timestamp
 import edu.rosehulman.attendancecheckoff.model.Club
 import edu.rosehulman.attendancecheckoff.model.Event
 import edu.rosehulman.attendancecheckoff.model.User
-import java.util.*
 
 object Utils {
 
@@ -17,7 +17,7 @@ object Utils {
 
     val testEvent = Event(
         "Meeting",
-        Date(System.nanoTime()),
+        Timestamp.now(),
         "DEFAULT MEETING",
         arrayListOf(),
         "")

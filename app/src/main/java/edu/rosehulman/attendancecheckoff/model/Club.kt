@@ -2,6 +2,7 @@ package edu.rosehulman.attendancecheckoff.model
 
 import android.os.Parcel
 import android.os.Parcelable
+import com.google.firebase.firestore.DocumentSnapshot
 import com.google.firebase.firestore.Exclude
 
 data class Club(
@@ -29,6 +30,12 @@ data class Club(
 
         override fun newArray(size: Int): Array<Club?> {
             return arrayOfNulls(size)
+        }
+
+        fun fromSnapshot(document: DocumentSnapshot): Club {
+            return document.toObject(Club::class.java)!!.apply {
+                id = document.id
+            }
         }
     }
 

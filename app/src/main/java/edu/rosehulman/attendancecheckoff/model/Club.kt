@@ -5,7 +5,7 @@ import android.os.Parcelable
 import com.google.firebase.firestore.Exclude
 
 data class Club(
-    val name: String
+    val name: String = ""
 ) : Parcelable {
     @get: Exclude var id: String =""
 

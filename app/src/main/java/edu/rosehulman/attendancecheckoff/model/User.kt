@@ -4,11 +4,11 @@ import android.os.Parcel
 import android.os.Parcelable
 
 data class User(
-    val username: String,
-    val name: String,
-    val major: String,
-    val year: String,
-    val clubs: ArrayList<String>
+    var username: String = "",
+    var name: String = "",
+    var major: String = "",
+    var year: String = "",
+    var clubs: ArrayList<String> = ArrayList()
 ) : Parcelable {
     var id: String = ""
 

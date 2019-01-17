@@ -7,11 +7,11 @@ import java.util.*
 import kotlin.collections.ArrayList
 
 data class Event(
-    val name: String,
-    val dateTime: Date,
-    val description: String,
+    val name: String = "",
+    val dateTime: Date = Date(),
+    val description: String = "",
     val attendedMembers: ArrayList<String> = ArrayList(),
-    val clubId: String
+    val clubId: String = ""
     ) : Parcelable {
 
     @get:Exclude var id = ""

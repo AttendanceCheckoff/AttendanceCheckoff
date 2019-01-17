@@ -11,7 +11,7 @@ data class Event(
     val dateTime: Date,
     val description: String,
     val attendedMembers: ArrayList<String> = ArrayList(),
-    val clubId: Long
+    val clubId: String
     ) : Parcelable {
 
     @get:Exclude var id = ""
@@ -21,7 +21,7 @@ data class Event(
         Date(parcel.readLong()),
         parcel.readString(),
         parcel.readArrayList(String::class.java.classLoader) as ArrayList<String>,
-        parcel.readLong()
+        parcel.readString()
     ) {
         this.id = parcel.readString()
     }
@@ -31,7 +31,7 @@ data class Event(
         parcel.writeLong(dateTime.time)
         parcel.writeString(description)
         parcel.writeList(attendedMembers)
-        parcel.writeLong(clubId)
+        parcel.writeString(clubId)
         parcel.writeString(id)
     }
 

@@ -24,8 +24,9 @@ object Utils {
     val testEvent = Event(
         "Meeting",
         Date(System.nanoTime()),
+        "DEFAULT MEETING",
         arrayListOf(),
-        "DEFAULT MEETING")
+        "")
 
     val testUser = User(
         "harnersa",

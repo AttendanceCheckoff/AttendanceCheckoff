@@ -2,6 +2,7 @@ package edu.rosehulman.attendancecheckoff.model
 
 import android.os.Parcel
 import android.os.Parcelable
+import com.google.firebase.firestore.Exclude
 
 data class User(
     var username: String = "",
@@ -10,7 +11,7 @@ data class User(
     var year: String = "",
     var clubs: ArrayList<String> = ArrayList()
 ) : Parcelable {
-    var id: String = ""
+    @get: Exclude var id: String = ""
 
     constructor(parcel: Parcel) : this(
         parcel.readString(),
@@ -44,5 +45,4 @@ data class User(
             return arrayOfNulls(size)
         }
     }
-
 }

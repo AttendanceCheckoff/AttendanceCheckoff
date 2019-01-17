@@ -7,7 +7,7 @@ import com.google.firebase.firestore.Exclude
 data class Club(
     val name: String = ""
 ) : Parcelable {
-    @get: Exclude var id: String =""
+    @get:Exclude var id: String =""
 
     constructor(parcel: Parcel) : this(parcel.readString()) {
         id = parcel.readString()

@@ -30,8 +30,7 @@ class MembersFragment : Fragment() {
         return (inflater.inflate(R.layout.fragment_recycler_view, container, false) as RecyclerView).apply {
             layoutManager = LinearLayoutManager(activity)
             adapter = this@MembersFragment.adapter
-            this@MembersFragment.adapter.makeClub(club)
-            this@MembersFragment.adapter.addSnapashotListener()
+            this@MembersFragment.adapter.addSnapashotListener(club)
             addItemDecoration(DividerItemDecoration(activity, LinearLayoutManager.VERTICAL))
         }
     }

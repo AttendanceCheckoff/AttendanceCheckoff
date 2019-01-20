@@ -16,7 +16,6 @@ class MembersAdapter(val context: Context?) : RecyclerView.Adapter<MembersViewHo
 
     val membersRef by lazy { FirebaseFirestore.getInstance().collection("users") }
     val members = ArrayList<User>()
-    lateinit var club: Club
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MembersViewHolder {
         val view = LayoutInflater.from(context).inflate(R.layout.officials_member_item, parent, false)
@@ -29,7 +28,7 @@ class MembersAdapter(val context: Context?) : RecyclerView.Adapter<MembersViewHo
         holder.bind(members[position])
     }
 
-    fun addSnapashotListener(){
+    fun addSnapashotListener(club: Club){
         membersRef.whereArrayContains("clubs", club.id).addSnapshotListener{snapshot, firesoreException ->
             if (firesoreException!=null){
                 return@addSnapshotListener
@@ -47,10 +46,6 @@ class MembersAdapter(val context: Context?) : RecyclerView.Adapter<MembersViewHo
             members.addAll(it.map{doc -> User.fromSnapshot(doc)})
         }
         notifyDataSetChanged()
-    }
-
-    fun makeClub(thisClub: Club) {
-        club=thisClub
     }
 
 }

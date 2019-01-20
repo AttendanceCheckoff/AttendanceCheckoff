@@ -4,7 +4,13 @@ import android.os.Parcel
 import android.os.Parcelable
 import com.google.firebase.firestore.Exclude
 
-data class Official(val clubId: String = "", val userId: String = "", val role: String = "", val rank: Int = -1) : Parcelable {
+data class Official(
+    val clubId: String = "",
+    val userId: String = "",
+    val role: String = "",
+    val rank: Int = -1
+) :
+    Parcelable {
 
     @get:Exclude
     var id = ""
@@ -33,6 +39,4 @@ data class Official(val clubId: String = "", val userId: String = "", val role: 
 
         override fun newArray(size: Int): Array<Official?> = arrayOfNulls(size)
     }
-
-
 }

@@ -30,13 +30,13 @@ class MainActivity : AppCompatActivity() {
 
         bottom_navigation.setOnNavigationItemSelectedListener { item ->
             val fragment: Fragment = when (item.itemId) {
-                R.id.navigation_home -> {
+                R.id.navigation_clubs -> {
                     ClubsFragment()
                 }
-                R.id.navigation_dashboard -> {
+                R.id.navigation_events -> {
                     EventsFragment()
                 }
-                R.id.navigation_notifications -> {
+                R.id.navigation_id -> {
                     IDFragment()
                 }
                 else -> {

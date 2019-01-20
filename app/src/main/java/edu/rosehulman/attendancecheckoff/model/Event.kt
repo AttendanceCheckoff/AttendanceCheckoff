@@ -3,6 +3,7 @@ package edu.rosehulman.attendancecheckoff.model
 import android.os.Parcel
 import android.os.Parcelable
 import com.google.firebase.Timestamp
+import com.google.firebase.firestore.DocumentSnapshot
 import com.google.firebase.firestore.Exclude
 import edu.rosehulman.attendancecheckoff.util.readStringArrayList
 import edu.rosehulman.attendancecheckoff.util.readTimeStamp
@@ -39,9 +40,21 @@ data class Event(
     override fun describeContents() = 0
 
     companion object CREATOR : Parcelable.Creator<Event> {
+        const val KEY_NAME = "name"
+        const val KEY_DATE_TIME = "dateTime"
+        const val KEY_DESCRIPTION = "description"
+        const val KEY_ATTENDED_MEMBERS = "attendedMembers"
+        const val KEY_CLUB_ID = "clubId"
+
         override fun createFromParcel(parcel: Parcel) = Event(parcel)
 
         override fun newArray(size: Int): Array<Event?> = arrayOfNulls(size)
+
+        fun fromSnapshot(document: DocumentSnapshot): Event {
+            return document.toObject(Event::class.java)!!.apply {
+                id = document.id
+            }
+        }
     }
 
 }

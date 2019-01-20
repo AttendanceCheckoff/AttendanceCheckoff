@@ -48,6 +48,4 @@ data class Club(
             }
         }
     }
-
-
 }

@@ -58,10 +58,10 @@ class ClubActivity : AppCompatActivity() {
     inner class SectionsPagerAdapter(fm: FragmentManager) : FragmentPagerAdapter(fm) {
         override fun getItem(position: Int): Fragment = when (position) {
             0 -> OfficialsFragment.newInstance(club)
-            1 -> MembersFragment()
-            2 -> PersonalFragment()
-            3 -> HistoryFragment()
-            else -> OfficialsFragment()
+            1 -> MembersFragment.newInstance(club)
+            2 -> PersonalFragment.newInstance(club)
+            3 -> HistoryFragment.newInstance(club)
+            else -> OfficialsFragment.newInstance(club)
         }
 
         override fun getCount() = 4

@@ -36,11 +36,11 @@ class ClubsAdapter(val context: Context?) : RecyclerView.Adapter<ClubViewHolder>
                 Log.d(Constants.TAG, "Error: $firestoreException")
                 return@addSnapshotListener
             }
-            populateLocalMovieQuotes(snapshot)
+            populateLocalClubs(snapshot)
         }
     }
 
-    private fun populateLocalMovieQuotes(snapshot: QuerySnapshot?) {
+    private fun populateLocalClubs(snapshot: QuerySnapshot?) {
         Log.d(Constants.TAG, "Populating Clubs")
         clubs.clear()
         snapshot?.let {

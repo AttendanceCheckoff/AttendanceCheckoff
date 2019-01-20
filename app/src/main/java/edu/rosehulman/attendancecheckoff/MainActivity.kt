@@ -19,8 +19,8 @@ class MainActivity : AppCompatActivity() {
         setSupportActionBar(main_toolbar)
 
         userRef.whereEqualTo("username", "harnersa").get().addOnSuccessListener { snapshot ->
-            snapshot?.toObjects(User::class.java)?.let {
-                CurrentState.user = it.first()
+            snapshot.documents.forEach {
+                CurrentState.user = User.fromSnapshot(it)
             }
         }
 

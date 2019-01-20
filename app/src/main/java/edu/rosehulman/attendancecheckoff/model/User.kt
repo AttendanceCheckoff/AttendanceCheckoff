@@ -2,14 +2,17 @@ package edu.rosehulman.attendancecheckoff.model
 
 import android.os.Parcel
 import android.os.Parcelable
+import com.google.firebase.firestore.DocumentSnapshot
 import com.google.firebase.firestore.Exclude
+import edu.rosehulman.attendancecheckoff.util.readStringArrayList
 
 data class User(
     var username: String = "",
     var name: String = "",
     var major: String = "",
     var year: String = "",
-    var clubs: ArrayList<String> = ArrayList()
+    var clubs: ArrayList<String> = ArrayList(),
+    var attendedEvents: ArrayList<String> = ArrayList()
 ) : Parcelable {
     @get: Exclude var id: String = ""
 
@@ -18,7 +21,8 @@ data class User(
         parcel.readString(),
         parcel.readString(),
         parcel.readString(),
-        parcel.readArrayList(String::class.java.classLoader) as ArrayList<String>
+        parcel.readStringArrayList(),
+        parcel.readStringArrayList()
     ) {
         id = parcel.readString()
     }
@@ -29,6 +33,7 @@ data class User(
         parcel.writeString(major)
         parcel.writeString(year)
         parcel.writeList(clubs)
+        parcel.writeList(attendedEvents)
         parcel.writeString(id)
     }
 
@@ -43,6 +48,12 @@ data class User(
 
         override fun newArray(size: Int): Array<User?> {
             return arrayOfNulls(size)
+        }
+
+        fun fromSnapshot(document: DocumentSnapshot): User {
+            return document.toObject(User::class.java)!!.apply {
+                id = document.id
+            }
         }
     }
 }

@@ -27,11 +27,11 @@ class ClubsAdapter(val context: Context?) : RecyclerView.Adapter<ClubViewHolder>
     override fun getItemCount() = clubs.size
 
     override fun onBindViewHolder(holder: ClubViewHolder, position: Int) {
-//        holder.bind(clubs[position])
+        holder.bind(clubs[position])
     }
 
     fun addSnapshotListener() {
-        clubsRef.whereArrayContains("id", CurrentState.user.clubs).addSnapshotListener { snapshot, firestoreException ->
+        clubsRef.whereArrayContains("members", CurrentState.user.id).addSnapshotListener { snapshot, firestoreException ->
             if (firestoreException != null) {
                 Log.d(Constants.TAG, "Error: $firestoreException")
                 return@addSnapshotListener

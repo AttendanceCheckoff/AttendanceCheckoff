@@ -4,8 +4,8 @@ import android.os.Parcel
 import android.os.Parcelable
 import com.google.firebase.Timestamp
 import com.google.firebase.firestore.Exclude
-import java.util.*
-import kotlin.collections.ArrayList
+import edu.rosehulman.attendancecheckoff.util.readStringArrayList
+import edu.rosehulman.attendancecheckoff.util.readTimeStamp
 
 data class Event(
     val name: String = "",
@@ -19,9 +19,9 @@ data class Event(
 
     constructor(parcel: Parcel) : this(
         parcel.readString(),
-        Timestamp(Date(parcel.readLong())),
+        parcel.readTimeStamp(),
         parcel.readString(),
-        parcel.readArrayList(String::class.java.classLoader) as ArrayList<String>,
+        parcel.readStringArrayList(),
         parcel.readString()
     ) {
         this.id = parcel.readString()

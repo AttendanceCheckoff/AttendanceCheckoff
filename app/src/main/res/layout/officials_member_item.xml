@@ -45,6 +45,7 @@
                 android:layout_marginTop="3dp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" />
+
         <ImageView
                 android:id="@+id/member_active"
                 android:src="@drawable/ic_active_star"

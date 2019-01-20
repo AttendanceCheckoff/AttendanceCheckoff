@@ -37,11 +37,11 @@ class EventsAdapter(val context: Context?) : RecyclerView.Adapter<EventsViewHold
                 Log.d(Constants.TAG, "Error: $firestoreException")
                 return@addSnapshotListener
             }
-            populateLocalMovieQuotes(snapshot)
+            populateLocalEvents(snapshot)
         }
     }
 
-    private fun populateLocalMovieQuotes(snapshot: QuerySnapshot?) {
+    private fun populateLocalEvents(snapshot: QuerySnapshot?) {
         Log.d(Constants.TAG, "Populating Clubs")
         events.clear()
         snapshot?.let {

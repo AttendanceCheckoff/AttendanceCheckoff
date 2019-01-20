@@ -23,12 +23,12 @@ class OfficialsFragment : Fragment() {
         super.onCreate(savedInstanceState)
         arguments?.let {
             club = it.getParcelable(ARG_CLUB)!!
-//            adapter.officials = club.officials.toList()
         }
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         return (inflater.inflate(R.layout.fragment_recycler_view, container, false) as RecyclerView).apply {
+            this@OfficialsFragment.adapter.addSnapshotListener(club)
             layoutManager = LinearLayoutManager(activity)
             adapter = this@OfficialsFragment.adapter
             addItemDecoration(DividerItemDecoration(activity, LinearLayoutManager.VERTICAL))

@@ -3,6 +3,7 @@ package edu.rosehulman.attendancecheckoff.club.history
 import android.support.v7.widget.RecyclerView
 import android.view.View
 import edu.rosehulman.attendancecheckoff.model.Event
+import edu.rosehulman.attendancecheckoff.util.toReadableString
 import kotlinx.android.synthetic.main.events_item.view.*
 
 class HistoryViewHolder(itemView: View, adapter: HistoryAdapter) : RecyclerView.ViewHolder(itemView) {
@@ -15,6 +16,6 @@ class HistoryViewHolder(itemView: View, adapter: HistoryAdapter) : RecyclerView.
 
     fun bind(event: Event) {
         itemView.events_item_name.text = event.name
-        itemView.events_item_date.text = event.dateTime.toString()
+        itemView.events_item_date.text = event.dateTime.toReadableString()
     }
 }

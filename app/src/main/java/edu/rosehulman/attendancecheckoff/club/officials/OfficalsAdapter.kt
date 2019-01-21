@@ -1,6 +1,7 @@
 package edu.rosehulman.attendancecheckoff.club.officials
 
 import android.content.Context
+import android.content.Intent
 import android.support.v7.widget.RecyclerView
 import android.util.Log
 import android.view.LayoutInflater
@@ -22,7 +23,7 @@ class OfficialsAdapter(var context: Context?) : RecyclerView.Adapter<OfficialsVi
 
     override fun onCreateViewHolder(parent: ViewGroup, position: Int): OfficialsViewHolder {
         val view = LayoutInflater.from(context).inflate(R.layout.officials_member_item, parent, false)
-        return OfficialsViewHolder(view)
+        return OfficialsViewHolder(view, this)
     }
 
     override fun getItemCount() = officials.size
@@ -52,8 +53,19 @@ class OfficialsAdapter(var context: Context?) : RecyclerView.Adapter<OfficialsVi
                     notifyItemChanged(index)
                 }
             }
+            notifyDataSetChanged()
         }
-        notifyDataSetChanged()
+    }
+
+    fun sendEmail(position: Int) {
+        val intent = Intent(Intent.ACTION_SEND).apply {
+            type = "plain/text"
+            putExtra(
+                Intent.EXTRA_EMAIL,
+                arrayOf(context?.getString(R.string.email_domain, officials[position].user.username))
+            )
+        }
+        context?.startActivity(intent)
     }
 
 }

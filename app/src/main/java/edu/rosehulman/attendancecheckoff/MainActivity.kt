@@ -18,15 +18,14 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.main_activity)
         setSupportActionBar(main_toolbar)
 
-        userRef.whereEqualTo("username", "harnersa").get().addOnSuccessListener { snapshot ->
+        userRef.whereEqualTo(User.KEY_USERNAME, "harnersa").get().addOnSuccessListener { snapshot ->
             snapshot.documents.forEach {
                 CurrentState.user = User.fromSnapshot(it)
             }
+            supportFragmentManager.beginTransaction().replace(R.id.content, ClubsFragment()).commit()
         }
 
         supportActionBar?.title = CurrentState.user.name
-
-        supportFragmentManager.beginTransaction().replace(R.id.content, ClubsFragment()).commit()
 
         bottom_navigation.setOnNavigationItemSelectedListener { item ->
             val fragment: Fragment = when (item.itemId) {

@@ -34,6 +34,9 @@ data class Club(
     }
 
     companion object CREATOR : Parcelable.Creator<Club> {
+
+        const val KEY_MEMBERS = "members"
+
         override fun createFromParcel(parcel: Parcel): Club {
             return Club(parcel)
         }

@@ -27,5 +27,6 @@
     <string name="tab_item_personal_title">Personal</string>
     <string name="tab_item_history_title">History</string>
     <string name="qr_code_of_current_user_description">QR Code of current user</string>
+    <string name="club_title_default">Club Title</string>
 
 </resources>

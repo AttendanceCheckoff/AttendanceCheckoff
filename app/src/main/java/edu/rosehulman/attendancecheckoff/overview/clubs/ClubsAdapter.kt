@@ -31,13 +31,15 @@ class ClubsAdapter(val context: Context?) : RecyclerView.Adapter<ClubViewHolder>
     }
 
     fun addSnapshotListener() {
-        clubsRef.whereArrayContains("members", CurrentState.user.id).addSnapshotListener { snapshot, firestoreException ->
-            if (firestoreException != null) {
-                Log.d(Constants.TAG, "Error: $firestoreException")
-                return@addSnapshotListener
+        clubsRef
+            .whereArrayContains(Club.KEY_MEMBERS, CurrentState.user.id)
+            .addSnapshotListener { snapshot, firestoreException ->
+                if (firestoreException != null) {
+                    Log.d(Constants.TAG, "Error: $firestoreException")
+                    return@addSnapshotListener
+                }
+                populateLocalClubs(snapshot)
             }
-            populateLocalClubs(snapshot)
-        }
     }
 
     private fun populateLocalClubs(snapshot: QuerySnapshot?) {

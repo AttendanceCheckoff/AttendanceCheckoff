@@ -32,13 +32,15 @@ class EventsAdapter(val context: Context?) : RecyclerView.Adapter<EventsViewHold
     }
 
     fun addSnapshotListener() {
-        eventsRef.whereArrayContains(Event.KEY_ATTENDED_MEMBERS, CurrentState.user.id).addSnapshotListener { snapshot, firestoreException ->
-            if (firestoreException != null) {
-                Log.d(Constants.TAG, "Error: $firestoreException")
-                return@addSnapshotListener
+        eventsRef
+            .whereArrayContains(Event.KEY_ATTENDED_MEMBERS, CurrentState.user.id)
+            .addSnapshotListener { snapshot, firestoreException ->
+                if (firestoreException != null) {
+                    Log.d(Constants.TAG, "Error: $firestoreException")
+                    return@addSnapshotListener
+                }
+                populateLocalEvents(snapshot)
             }
-            populateLocalEvents(snapshot)
-        }
     }
 
     private fun populateLocalEvents(snapshot: QuerySnapshot?) {
@@ -46,8 +48,8 @@ class EventsAdapter(val context: Context?) : RecyclerView.Adapter<EventsViewHold
         events.clear()
         snapshot?.let {
             events.addAll(it.map { doc -> Event.fromSnapshot(doc) })
+            notifyDataSetChanged()
         }
-        notifyDataSetChanged()
     }
 
     fun selectEvent(position: Int) {

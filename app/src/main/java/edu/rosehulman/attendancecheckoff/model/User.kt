@@ -9,6 +9,7 @@ import edu.rosehulman.attendancecheckoff.util.readStringArrayList
 data class User(
     var username: String = "",
     var name: String = "",
+    var studentID: String = "",
     var major: String = "",
     var year: String = "",
     var clubs: ArrayList<String> = ArrayList(),
@@ -17,6 +18,7 @@ data class User(
     @get: Exclude var id: String = ""
 
     constructor(parcel: Parcel) : this(
+        parcel.readString(),
         parcel.readString(),
         parcel.readString(),
         parcel.readString(),
@@ -30,6 +32,7 @@ data class User(
     override fun writeToParcel(parcel: Parcel, flags: Int) {
         parcel.writeString(username)
         parcel.writeString(name)
+        parcel.writeString(studentID)
         parcel.writeString(major)
         parcel.writeString(year)
         parcel.writeList(clubs)

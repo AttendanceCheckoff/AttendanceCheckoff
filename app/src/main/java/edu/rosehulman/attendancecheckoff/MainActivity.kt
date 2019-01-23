@@ -4,6 +4,8 @@ import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.support.v7.app.AppCompatActivity
 import com.google.firebase.firestore.FirebaseFirestore
+import edu.rosehulman.attendancecheckoff.model.Club
+import edu.rosehulman.attendancecheckoff.model.Official
 import edu.rosehulman.attendancecheckoff.model.User
 import edu.rosehulman.attendancecheckoff.overview.clubs.ClubsFragment
 import edu.rosehulman.attendancecheckoff.overview.events.EventsFragment

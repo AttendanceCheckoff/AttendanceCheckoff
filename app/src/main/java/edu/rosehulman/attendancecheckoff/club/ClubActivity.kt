@@ -1,5 +1,7 @@
 package edu.rosehulman.attendancecheckoff.club
 
+import android.app.Activity
+import android.content.Intent
 import android.os.Bundle
 import android.support.design.widget.TabLayout
 import android.support.v4.app.Fragment
@@ -8,6 +10,7 @@ import android.support.v4.app.FragmentPagerAdapter
 import android.support.v7.app.AppCompatActivity
 import android.view.Menu
 import android.view.MenuItem
+import edu.rosehulman.attendancecheckoff.BarCodeActivity
 import edu.rosehulman.attendancecheckoff.R
 import edu.rosehulman.attendancecheckoff.club.history.HistoryFragment
 import edu.rosehulman.attendancecheckoff.club.members.MembersFragment
@@ -20,6 +23,8 @@ import kotlinx.android.synthetic.main.club_activity.*
 class ClubActivity : AppCompatActivity() {
 
     private var mSectionsPagerAdapter: SectionsPagerAdapter? = null
+
+    val BAR_CODE_REQUEST = 1
 
     lateinit var club: Club
 
@@ -45,14 +50,25 @@ class ClubActivity : AppCompatActivity() {
         return true
     }
 
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        val id = item.itemId
-
-        if (id == R.id.action_settings) {
-            return true
+    override fun onOptionsItemSelected(item: MenuItem) =
+        when (item.itemId) {
+            R.id.action_settings -> true
+            R.id.action_qrcode -> {
+                Intent(this, BarCodeActivity::class.java).also { barCodeIntent ->
+                    barCodeIntent.type = Intent.ACTION_VIEW
+                    startActivityForResult(barCodeIntent, BAR_CODE_REQUEST)
+                }
+                true
+            }
+            else -> super.onOptionsItemSelected(item)
         }
 
-        return super.onOptionsItemSelected(item)
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        if (requestCode == BAR_CODE_REQUEST) {
+            if (resultCode == Activity.RESULT_OK) {
+
+            }
+        }
     }
 
     inner class SectionsPagerAdapter(fm: FragmentManager) : FragmentPagerAdapter(fm) {

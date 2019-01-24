@@ -27,5 +27,10 @@
     <string name="club_title_default">Club Title</string>
     <string name="event_description">Event Description</string>
     <string name="remind_me_about_the_event">Remind me about the event</string>
+    <string name="action_qrcode_title">QR-Code</string>
+
+    <string name="title_activity_bar_code">BarCodeActivity</string>
+    <string name="dummy_button">Dummy Button</string>
+    <string name="dummy_content">DUMMY\nCONTENT</string>
 
 </resources>

@@ -47,6 +47,7 @@ data class User(
     companion object CREATOR : Parcelable.Creator<User> {
         const val KEY_COLLECTION = "users"
         const val KEY_USERNAME = "username"
+        const val KEY_STUDENT_ID = "studentID"
         const val KEY_EVENTS = "attendedEvents"
 
         override fun createFromParcel(parcel: Parcel): User {

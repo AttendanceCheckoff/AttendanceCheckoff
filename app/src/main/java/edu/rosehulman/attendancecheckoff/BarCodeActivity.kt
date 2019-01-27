@@ -1,8 +1,9 @@
 package edu.rosehulman.attendancecheckoff
 
+import android.app.Activity
+import android.content.Intent
 import android.graphics.BitmapFactory
 import android.os.Bundle
-import android.support.design.widget.Snackbar
 import android.support.v7.app.AppCompatActivity
 import android.util.Log
 import com.camerakit.CameraKitView
@@ -14,6 +15,10 @@ import edu.rosehulman.attendancecheckoff.util.Constants
 import kotlinx.android.synthetic.main.bar_code_activity.*
 
 class BarCodeActivity : AppCompatActivity() {
+
+    companion object {
+        const val KEY_DETECTED_VALUE = "Bar code value"
+    }
 
     val detector by lazy {
         FirebaseVision.getInstance().getVisionBarcodeDetector(
@@ -30,10 +35,14 @@ class BarCodeActivity : AppCompatActivity() {
                 cameraKitView.captureImage { _, bytes ->
                     val bitmap = BitmapFactory.decodeByteArray(bytes, 0, bytes.size)
                     detector.detectInImage(FirebaseVisionImage.fromBitmap(bitmap))
-                        .addOnSuccessListener {
-                            it.forEach { barcode ->
+                        .addOnSuccessListener { list ->
+                            list.forEach { barcode ->
                                 Log.d(Constants.TAG, barcode.displayValue)
-                                Snackbar.make(camera, barcode.displayValue ?: "No barcode found", Snackbar.LENGTH_INDEFINITE).show()
+                                Intent().also {
+                                    it.putExtra(KEY_DETECTED_VALUE, barcode.displayValue)
+                                    setResult(Activity.RESULT_OK, it)
+                                    finish()
+                                }
                             }
                         }
                 }

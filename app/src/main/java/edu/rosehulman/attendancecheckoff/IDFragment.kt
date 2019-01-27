@@ -20,7 +20,7 @@ class IDFragment : Fragment() {
     }
 
     private fun generateQRCode(): Bitmap? {
-        val matrix = MultiFormatWriter().encode(CurrentState.user.username, BarcodeFormat.QR_CODE, 600, 600)
+        val matrix = MultiFormatWriter().encode(CurrentState.user.studentID, BarcodeFormat.QR_CODE, 600, 600)
         return BarcodeEncoder().createBitmap(matrix)
     }
 }

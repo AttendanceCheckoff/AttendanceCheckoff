@@ -27,6 +27,9 @@
                     android:value="edu.rosehulman.attendancecheckoff.MainActivity"/>
         </activity>
         <activity android:name=".event.EventActivity">
+            <meta-data
+                    android:name="android.support.PARENT_ACTIVITY"
+                    android:value="edu.rosehulman.attendancecheckoff.MainActivity"/>
         </activity>
     </application>
 

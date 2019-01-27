@@ -54,7 +54,7 @@ class EventsAdapter(val context: Context?) : RecyclerView.Adapter<EventsViewHold
 
     fun selectEvent(position: Int) {
         val intent = Intent(context, EventActivity::class.java).apply {
-            putExtra("CLUB", events[position])
+            putExtra(Constants.ARG_INTENT_EVENT, events[position])
         }
         context?.startActivity(intent)
     }

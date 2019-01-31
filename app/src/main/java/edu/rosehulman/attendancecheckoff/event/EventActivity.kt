@@ -24,5 +24,6 @@ class EventActivity : AppCompatActivity() {
         supportActionBar?.title = event.name
         event_description.text = event.description
         attended_members.adapter = EventAdapter(this, event)
+        (attended_members.adapter as EventAdapter).addSnapshotListener()
     }
 }

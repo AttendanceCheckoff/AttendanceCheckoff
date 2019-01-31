@@ -12,7 +12,7 @@ import edu.rosehulman.attendancecheckoff.model.Event
 import edu.rosehulman.attendancecheckoff.model.User
 import edu.rosehulman.attendancecheckoff.util.Constants
 
-class EventAdapter(val context: Context, event: Event): RecyclerView.Adapter<EventHolder>() {
+class EventAdapter(val context: Context, val currentEvent: Event): RecyclerView.Adapter<EventHolder>() {
 
     val usersRef = FirebaseFirestore.getInstance().collection("users")
 
@@ -26,6 +26,8 @@ class EventAdapter(val context: Context, event: Event): RecyclerView.Adapter<Eve
         return EventHolder(view, this)
     }
 
+
+
     override fun getItemCount() = members.size
 
     override fun onBindViewHolder(holder: EventHolder, position: Int) {
@@ -33,7 +35,24 @@ class EventAdapter(val context: Context, event: Event): RecyclerView.Adapter<Eve
     }
 
     fun addSnapshotListener(){
+        usersRef
+            .whereArrayContains(User.KEY_EVENTS, currentEvent.id)
+            .addSnapshotListener { snapshot, firestoreException ->
+                if (firestoreException != null) {
+                    Log.d(Constants.TAG, "Error: $firestoreException")
+                    return@addSnapshotListener
+                }
+                populateLocalUsers(snapshot)
+            }
 
+    }
+
+    fun populateLocalUsers(snapshot: QuerySnapshot?){
+        members.clear()
+        snapshot?.let {
+            members.addAll(it.map { doc -> User.fromSnapshot(doc) })
+            notifyDataSetChanged()
+        }
     }
 
 

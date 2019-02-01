@@ -2,6 +2,7 @@ package edu.rosehulman.attendancecheckoff.event
 
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
+import android.support.v7.widget.LinearLayoutManager
 import edu.rosehulman.attendancecheckoff.R
 import edu.rosehulman.attendancecheckoff.club.ClubActivity
 import edu.rosehulman.attendancecheckoff.model.Event
@@ -22,8 +23,13 @@ class EventActivity : AppCompatActivity() {
 
         event = intent.getParcelableExtra(Constants.ARG_INTENT_EVENT)
         supportActionBar?.title = event.name
+
         event_description.text = event.description
-        attended_members.adapter = EventAdapter(this, event)
-        (attended_members.adapter as EventAdapter).addSnapshotListener()
+
+        val adapter = EventAdapter(this, event)
+        adapter.addSnapshotListener()
+        attended_members.layoutManager = LinearLayoutManager(this)
+        attended_members.adapter = adapter
+
     }
 }

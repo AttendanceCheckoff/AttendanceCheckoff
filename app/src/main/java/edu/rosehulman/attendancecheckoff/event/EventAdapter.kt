@@ -16,17 +16,11 @@ class EventAdapter(val context: Context, val currentEvent: Event): RecyclerView.
 
     val usersRef = FirebaseFirestore.getInstance().collection("users")
 
-    init{
-
-    }
-
     val members = ArrayList<User>()
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): EventHolder {
         val view = LayoutInflater.from(context).inflate(R.layout.officials_member_item, parent, false)
         return EventHolder(view, this)
     }
-
-
 
     override fun getItemCount() = members.size
 
@@ -35,6 +29,8 @@ class EventAdapter(val context: Context, val currentEvent: Event): RecyclerView.
     }
 
     fun addSnapshotListener(){
+        Log.d(Constants.TAG, "Adding Event Snapshot Listener")
+        Log.d(Constants.TAG, currentEvent.id)
         usersRef
             .whereArrayContains(User.KEY_EVENTS, currentEvent.id)
             .addSnapshotListener { snapshot, firestoreException ->
@@ -42,21 +38,12 @@ class EventAdapter(val context: Context, val currentEvent: Event): RecyclerView.
                     Log.d(Constants.TAG, "Error: $firestoreException")
                     return@addSnapshotListener
                 }
-                populateLocalUsers(snapshot)
+                populateLocalMembers(snapshot)
             }
-
-    }
-
-    fun populateLocalUsers(snapshot: QuerySnapshot?){
-        members.clear()
-        snapshot?.let {
-            members.addAll(it.map { doc -> User.fromSnapshot(doc) })
-            notifyDataSetChanged()
-        }
     }
 
 
-    fun populateLocalMembers(snapshot: QuerySnapshot) {
+    fun populateLocalMembers(snapshot: QuerySnapshot?) {
         Log.d(Constants.TAG, "Populating Members")
         members.clear()
         snapshot?.let {

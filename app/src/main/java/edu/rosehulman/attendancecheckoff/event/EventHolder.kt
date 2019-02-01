@@ -9,6 +9,7 @@ class EventHolder(itemView: View, adapter: EventAdapter): RecyclerView.ViewHolde
 
     fun bind(user: User){
         itemView.official_member_item_name.text = user.name
+        itemView.role.visibility=View.INVISIBLE
     }
 
 }

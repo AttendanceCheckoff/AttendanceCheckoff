@@ -4,6 +4,7 @@ import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
+import android.support.v7.widget.DividerItemDecoration
 import android.support.v7.widget.LinearLayoutManager
 import android.view.Menu
 import android.view.MenuItem
@@ -40,6 +41,7 @@ class EventActivity : AppCompatActivity() {
         adapter.addSnapshotListener()
         attended_members.layoutManager = LinearLayoutManager(this)
         attended_members.adapter = adapter
+        attended_members.addItemDecoration(DividerItemDecoration(this, LinearLayoutManager.VERTICAL))
 
     }
 

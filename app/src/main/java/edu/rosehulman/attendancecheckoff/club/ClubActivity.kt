@@ -20,13 +20,12 @@ import edu.rosehulman.attendancecheckoff.club.personal.PersonalFragment
 import edu.rosehulman.attendancecheckoff.model.Club
 import edu.rosehulman.attendancecheckoff.model.User
 import edu.rosehulman.attendancecheckoff.util.Constants
+import edu.rosehulman.attendancecheckoff.util.Constants.BAR_CODE_REQUEST
 import kotlinx.android.synthetic.main.club_activity.*
 
 class ClubActivity : AppCompatActivity() {
 
     private var mSectionsPagerAdapter: SectionsPagerAdapter? = null
-
-    val BAR_CODE_REQUEST = 1
 
     val userRef by lazy { FirebaseFirestore.getInstance().collection(User.KEY_COLLECTION) }
 

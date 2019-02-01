@@ -6,4 +6,6 @@ object Constants {
 
     const val ARG_INTENT_CLUB = "Intent club"
     const val ARG_INTENT_EVENT = "Intent event"
+
+    const val BAR_CODE_REQUEST = 1
 }

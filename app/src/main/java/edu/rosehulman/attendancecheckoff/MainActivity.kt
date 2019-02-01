@@ -1,31 +1,37 @@
 package edu.rosehulman.attendancecheckoff
 
+import android.content.Intent
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.support.v7.app.AppCompatActivity
+import android.util.Log
+import android.widget.Toast
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.firestore.FirebaseFirestore
-import edu.rosehulman.attendancecheckoff.model.Club
-import edu.rosehulman.attendancecheckoff.model.Official
 import edu.rosehulman.attendancecheckoff.model.User
 import edu.rosehulman.attendancecheckoff.overview.clubs.ClubsFragment
 import edu.rosehulman.attendancecheckoff.overview.events.EventsFragment
+import edu.rosehulman.attendancecheckoff.util.Constants
+import edu.rosehulman.attendancecheckoff.util.Constants.RC_ROSEFIRE_LOGIN
+import edu.rosehulman.rosefire.Rosefire
 import kotlinx.android.synthetic.main.main_activity.*
 
 class MainActivity : AppCompatActivity() {
 
     val userRef by lazy { FirebaseFirestore.getInstance().collection("users") }
 
+    val auth by lazy { FirebaseAuth.getInstance() }
+    lateinit var authListener: FirebaseAuth.AuthStateListener
+
+    // Request code for launching the sign in Intent.
+    private val RC_SIGN_IN = 1
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.main_activity)
         setSupportActionBar(main_toolbar)
-
-        userRef.whereEqualTo(User.KEY_USERNAME, "harnersa").get().addOnSuccessListener { snapshot ->
-            snapshot.documents.forEach {
-                CurrentState.user = User.fromSnapshot(it)
-            }
-            supportFragmentManager.beginTransaction().replace(R.id.content, ClubsFragment()).commit()
-        }
+        initializeListeners()
 
         supportActionBar?.title = CurrentState.user.name
 
@@ -46,6 +52,59 @@ class MainActivity : AppCompatActivity() {
             }
             supportFragmentManager.beginTransaction().replace(R.id.content, fragment).commit()
             true
+        }
+    }
+
+    override fun onStart() {
+        super.onStart()
+        auth.addAuthStateListener(authListener)
+    }
+
+    override fun onStop() {
+        super.onStop()
+        auth.removeAuthStateListener(authListener)
+    }
+
+    private fun initializeListeners() {
+        authListener = FirebaseAuth.AuthStateListener { auth ->
+            val user = auth.currentUser
+            if (user != null) {
+                switchToNavigation(user)
+            } else {
+                switchToRoseFire()
+            }
+        }
+    }
+
+    private fun switchToRoseFire() {
+        val signInIntent = Rosefire.getSignInIntent(this, getString(R.string.rosefire_token))
+        startActivityForResult(signInIntent, RC_ROSEFIRE_LOGIN)
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        if (requestCode == RC_ROSEFIRE_LOGIN) {
+            val result = Rosefire.getSignInResultFromIntent(data)
+            if (!result.isSuccessful) {
+                // The user cancelled the login
+            }
+            FirebaseAuth.getInstance().signInWithCustomToken(result.token)
+                .addOnCompleteListener(this) { task ->
+                    Log.d(Constants.TAG, "signInWithCustomToken:onComplete:" + task.isSuccessful)
+
+                    if (!task.isSuccessful) {
+                        Log.w(Constants.TAG, "signInWithCustomToken", task.exception)
+                        Toast.makeText(this, "Authentication failed.", Toast.LENGTH_SHORT).show()
+                    }
+                }
+        }
+    }
+
+    fun switchToNavigation(user: FirebaseUser) {
+        userRef.whereEqualTo(User.KEY_USERNAME, user.uid).get().addOnSuccessListener { snapshot ->
+            snapshot.documents.forEach {
+                CurrentState.user = User.fromSnapshot(it)
+            }
+            supportFragmentManager.beginTransaction().replace(R.id.content, ClubsFragment()).commit()
         }
     }
 }

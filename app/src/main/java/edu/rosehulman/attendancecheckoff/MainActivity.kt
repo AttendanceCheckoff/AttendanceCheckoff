@@ -53,15 +53,13 @@ class MainActivity : AppCompatActivity() {
             supportFragmentManager.beginTransaction().replace(R.id.content, fragment).commit()
             true
         }
-    }
-
-    override fun onStart() {
-        super.onStart()
+        Log.e(Constants.TAG, "onCreate")
         auth.addAuthStateListener(authListener)
     }
 
-    override fun onStop() {
-        super.onStop()
+    override fun onDestroy() {
+        super.onDestroy()
+        Log.e(Constants.TAG, "onDestroy")
         auth.removeAuthStateListener(authListener)
     }
 
@@ -113,13 +111,13 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    fun switchToNavigation(user: FirebaseUser) {
+    private fun switchToNavigation(user: FirebaseUser) {
         userRef.whereEqualTo(User.KEY_USERNAME, user.uid).get().addOnSuccessListener { snapshot ->
-            snapshot.documents.forEach {
-                CurrentState.user = User.fromSnapshot(it)
-                supportActionBar?.title = CurrentState.user.name
-            }
+            CurrentState.user = User.fromSnapshot(snapshot.documents.first())
+            supportActionBar?.title = CurrentState.user.name
+
             supportFragmentManager.beginTransaction().replace(R.id.content, ClubsFragment()).commit()
         }
+
     }
 }

@@ -40,11 +40,12 @@ data class Event(
     override fun describeContents() = 0
 
     companion object CREATOR : Parcelable.Creator<Event> {
-        const val KEY_NAME = "name"
-        const val KEY_DATE_TIME = "dateTime"
-        const val KEY_DESCRIPTION = "description"
         const val KEY_ATTENDED_MEMBERS = "attendedMembers"
         const val KEY_CLUB_ID = "clubId"
+        const val KEY_COLLECTION = "events"
+        const val KEY_DATE_TIME = "dateTime"
+        const val KEY_DESCRIPTION = "description"
+        const val KEY_NAME = "name"
 
         override fun createFromParcel(parcel: Parcel) = Event(parcel)
 

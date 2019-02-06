@@ -21,6 +21,7 @@ import edu.rosehulman.attendancecheckoff.model.Club
 import edu.rosehulman.attendancecheckoff.model.User
 import edu.rosehulman.attendancecheckoff.util.Constants
 import edu.rosehulman.attendancecheckoff.util.Constants.BAR_CODE_REQUEST
+import edu.rosehulman.attendancecheckoff.util.FirebaseUtils
 import kotlinx.android.synthetic.main.club_activity.*
 
 class ClubActivity : AppCompatActivity() {
@@ -71,11 +72,7 @@ class ClubActivity : AppCompatActivity() {
             if (resultCode == Activity.RESULT_OK) {
                 val studentId = data?.getStringExtra(BarCodeActivity.KEY_DETECTED_VALUE)
                 studentId?.let { studentID ->
-                    userRef.whereEqualTo(User.KEY_STUDENT_ID, studentID).get().addOnSuccessListener {
-                        val user = User.fromSnapshot(it.documents.first())
-                        user.clubs.add(club.id)
-                        userRef.document(user.id).set(user)
-                    }
+                    FirebaseUtils.addUserToClub(studentID, club)
                 }
             }
         }

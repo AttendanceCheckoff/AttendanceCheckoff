@@ -9,7 +9,7 @@ class PersonalHolder(itemView: View, val adapter: PersonalAdapter): RecyclerView
 
     init {
         itemView.setOnClickListener {
-            adapter.checkEvent(adapterPosition)
+            adapter.selectEvent(adapterPosition)
         }
     }
 

@@ -30,7 +30,7 @@ class PersonalAdapter(val context: Context, val club: Club): RecyclerView.Adapte
         holder.bind(events[position])
     }
 
-    fun checkEvent(position: Int){
+    fun selectEvent(position: Int){
         val intent = Intent(context, EventActivity::class.java).apply {
             putExtra(Constants.ARG_INTENT_EVENT, events[position])
         }

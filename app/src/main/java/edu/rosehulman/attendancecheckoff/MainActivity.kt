@@ -5,6 +5,8 @@ import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.support.v7.app.AppCompatActivity
 import android.util.Log
+import android.view.Menu
+import android.view.MenuItem
 import android.widget.Toast
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
@@ -32,8 +34,6 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.main_activity)
         setSupportActionBar(main_toolbar)
         initializeListeners()
-
-        supportActionBar?.title = CurrentState.user.name
 
         bottom_navigation.setOnNavigationItemSelectedListener { item ->
             val fragment: Fragment = when (item.itemId) {
@@ -64,6 +64,20 @@ class MainActivity : AppCompatActivity() {
         super.onStop()
         auth.removeAuthStateListener(authListener)
     }
+
+    override fun onCreateOptionsMenu(menu: Menu): Boolean {
+        menuInflater.inflate(R.menu.main_menu, menu)
+        return true
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem) =
+        when (item.itemId) {
+            R.id.action_logout -> {
+                auth.signOut()
+                true
+            }
+            else -> super.onOptionsItemSelected(item)
+        }
 
     private fun initializeListeners() {
         authListener = FirebaseAuth.AuthStateListener { auth ->
@@ -103,6 +117,7 @@ class MainActivity : AppCompatActivity() {
         userRef.whereEqualTo(User.KEY_USERNAME, user.uid).get().addOnSuccessListener { snapshot ->
             snapshot.documents.forEach {
                 CurrentState.user = User.fromSnapshot(it)
+                supportActionBar?.title = CurrentState.user.name
             }
             supportFragmentManager.beginTransaction().replace(R.id.content, ClubsFragment()).commit()
         }

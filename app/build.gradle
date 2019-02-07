@@ -40,7 +40,8 @@ dependencies {
     implementation 'com.google.zxing:core:3.2.1'
     implementation 'com.journeyapps:zxing-android-embedded:3.2.0@aar'
     implementation 'edu.rosehulman.csse.rosefire:rosefire-android-client:2.1.0'
-    implementation 'de.hdodenhof:circleimageview:3.0.0'
+//    implementation 'de.hdodenhof:circleimageview:3.0.0'
+    implementation 'com.github.abdularis:CircularImageView:v1.2'
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
     implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-android:1.0.0'
 

@@ -57,9 +57,10 @@ class PersonalAdapter(val context: Context?, val club: Club): RecyclerView.Adapt
         events.clear()
         for (document in snapshot!!){
             val doc = Event.fromSnapshot(document)
-            if (doc.clubId.equals(club.id)){
+            if (doc.clubId == club.id){
                 events.add(doc)
             }
+            notifyDataSetChanged()
         }
     }
 }

@@ -9,7 +9,9 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import edu.rosehulman.attendancecheckoff.R
+import edu.rosehulman.attendancecheckoff.club.personal.PersonalAdapter
 import edu.rosehulman.attendancecheckoff.model.Club
+import kotlinx.android.synthetic.main.fragment_recycler_view.view.*
 
 const val ARG_CLUB = "ARG_CLUB"
 
@@ -27,11 +29,14 @@ class HistoryFragment : Fragment() {
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        return (inflater.inflate(R.layout.fragment_recycler_view, container, false) as RecyclerView).apply {
-            layoutManager = LinearLayoutManager(activity)
-            adapter = HistoryAdapter(context, club)
-            addItemDecoration(DividerItemDecoration(activity, LinearLayoutManager.VERTICAL))
-        }
+        val view = inflater.inflate(R.layout.fragment_recycler_view, container, false)
+        adapter = HistoryAdapter(context, club)
+        adapter.addSnapshotListener()
+        view.recycler_view.layoutManager = LinearLayoutManager(context)
+        view.recycler_view.adapter = adapter
+        view.recycler_view.addItemDecoration(DividerItemDecoration(activity, LinearLayoutManager.VERTICAL))
+        return view
+
     }
 
     companion object {

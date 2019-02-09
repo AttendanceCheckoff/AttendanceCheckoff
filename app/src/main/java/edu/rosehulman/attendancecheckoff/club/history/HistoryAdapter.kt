@@ -41,7 +41,7 @@ class HistoryAdapter(val context: Context?, val club: Club) : RecyclerView.Adapt
 
     fun addSnapshotListener() {
         eventsRef
-            .whereArrayContains(Event.KEY_CLUB_ID, club.id)
+            .whereEqualTo(Event.KEY_CLUB_ID, club.id)
             .addSnapshotListener { snapshot, firestoreException ->
                 if (firestoreException != null) {
                     Log.d(Constants.TAG, "Error: $firestoreException")

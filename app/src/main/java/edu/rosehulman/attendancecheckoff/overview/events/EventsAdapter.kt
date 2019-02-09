@@ -124,5 +124,6 @@ class EventsAdapter(val context: Context?) : RecyclerView.Adapter<EventsViewHold
                     }
                 }
             }
+        notifyDataSetChanged()
     }
 }

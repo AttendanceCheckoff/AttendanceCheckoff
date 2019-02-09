@@ -15,7 +15,7 @@ const val ARG_CLUB = "ARG_CLUB"
 
 class HistoryFragment : Fragment() {
 
-    val adapter by lazy { HistoryAdapter(activity) }
+    lateinit var adapter: HistoryAdapter
 
     lateinit var club:Club
 
@@ -29,7 +29,7 @@ class HistoryFragment : Fragment() {
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         return (inflater.inflate(R.layout.fragment_recycler_view, container, false) as RecyclerView).apply {
             layoutManager = LinearLayoutManager(activity)
-            adapter = this@HistoryFragment.adapter
+            adapter = HistoryAdapter(context, club)
             addItemDecoration(DividerItemDecoration(activity, LinearLayoutManager.VERTICAL))
         }
     }

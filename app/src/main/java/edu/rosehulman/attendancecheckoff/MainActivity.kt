@@ -8,9 +8,11 @@ import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import android.widget.Toast
+import com.google.firebase.Timestamp
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.firestore.FirebaseFirestore
+import edu.rosehulman.attendancecheckoff.model.Event
 import edu.rosehulman.attendancecheckoff.model.User
 import edu.rosehulman.attendancecheckoff.overview.clubs.ClubsFragment
 import edu.rosehulman.attendancecheckoff.overview.events.EventsFragment
@@ -22,6 +24,7 @@ import kotlinx.android.synthetic.main.main_activity.*
 class MainActivity : AppCompatActivity() {
 
     val userRef by lazy { FirebaseFirestore.getInstance().collection("users") }
+    val eventsRef = FirebaseFirestore.getInstance().collection("events")
 
     val auth by lazy { FirebaseAuth.getInstance() }
     lateinit var authListener: FirebaseAuth.AuthStateListener
@@ -34,6 +37,7 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.main_activity)
         setSupportActionBar(main_toolbar)
         initializeListeners()
+        //initializeData()
 
         bottom_navigation.setOnNavigationItemSelectedListener { item ->
             val fragment: Fragment = when (item.itemId) {
@@ -120,4 +124,11 @@ class MainActivity : AppCompatActivity() {
         }
 
     }
+
+//    private fun initializeData(){
+//        eventsRef.add(Event("Election", Timestamp.now(), "Election of President", arrayListOf(), "XjEQEzGdBNkVgXvI6OKE"))
+//        eventsRef.add(Event("Team meeting", Timestamp.now(), "Deciding team roster", arrayListOf(), "XjEQEzGdBNkVgXvI6OKE"))
+//        eventsRef.add(Event("General", Timestamp.now(), "General", arrayListOf(), "XjEQEzGdBNkVgXvI6OKE"))
+//        eventsRef.add(Event("Trophy ceremony", Timestamp.now(), "Handing trophies to winners", arrayListOf(), "XjEQEzGdBNkVgXvI6OKE"))
+//    }
 }

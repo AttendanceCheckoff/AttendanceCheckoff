@@ -72,6 +72,8 @@ class EventsAdapter(val context: Context?) : RecyclerView.Adapter<EventsViewHold
                 else{
                     for (document in snapshot!!){
                         val doc = Official.fromSnapshot(document)
+
+                        Log.d("IDs", doc.clubId + ": "+ events[position].clubId)
                         if (doc.clubId.equals(events[position].clubId)){
                             eventsRef.document(events[position].id).delete()
                         }

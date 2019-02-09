@@ -12,11 +12,13 @@ import edu.rosehulman.attendancecheckoff.CurrentState
 import edu.rosehulman.attendancecheckoff.R
 import edu.rosehulman.attendancecheckoff.event.EventActivity
 import edu.rosehulman.attendancecheckoff.model.Event
+import edu.rosehulman.attendancecheckoff.model.Official
 import edu.rosehulman.attendancecheckoff.util.Constants
 
 class EventsAdapter(val context: Context?) : RecyclerView.Adapter<EventsViewHolder>() {
 
     val eventsRef = FirebaseFirestore.getInstance().collection("events")
+    val officialRef = FirebaseFirestore.getInstance().collection("officials")
 
     val events = ArrayList<Event>()
 
@@ -57,5 +59,24 @@ class EventsAdapter(val context: Context?) : RecyclerView.Adapter<EventsViewHold
             putExtra(Constants.ARG_INTENT_EVENT, events[position])
         }
         context?.startActivity(intent)
+    }
+
+    fun remove(position: Int){
+        officialRef
+            .whereEqualTo(Official.KEY_USER_ID, CurrentState.user.id)
+            .addSnapshotListener { snapshot, firestoreException ->
+                if (firestoreException != null) {
+                    Log.d(Constants.TAG, "Error: $firestoreException")
+                    return@addSnapshotListener
+                }
+                else{
+                    for (document in snapshot!!){
+                        val doc = Official.fromSnapshot(document)
+                        if (doc.clubId.equals(events[position].clubId)){
+                            eventsRef.document(events[position].id).delete()
+                        }
+                    }
+                }
+            }
     }
 }

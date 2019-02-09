@@ -7,8 +7,10 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.QuerySnapshot
+import edu.rosehulman.attendancecheckoff.CurrentState
 import edu.rosehulman.attendancecheckoff.R
 import edu.rosehulman.attendancecheckoff.model.Event
+import edu.rosehulman.attendancecheckoff.model.Official
 import edu.rosehulman.attendancecheckoff.model.User
 import edu.rosehulman.attendancecheckoff.util.Constants
 

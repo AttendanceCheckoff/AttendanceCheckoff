@@ -5,21 +5,43 @@ import android.support.v4.app.Fragment
 import android.support.v7.widget.DividerItemDecoration
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
+import android.support.v7.widget.helper.ItemTouchHelper
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import edu.rosehulman.attendancecheckoff.R
+import kotlinx.android.synthetic.main.event_activity.*
+import kotlinx.android.synthetic.main.fragment_recycler_view.view.*
 
 class EventsFragment : Fragment() {
 
     val adapter by lazy { EventsAdapter(activity) }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        return (inflater.inflate(R.layout.fragment_recycler_view, container, false) as RecyclerView).apply {
-            this@EventsFragment.adapter.addSnapshotListener()
-            layoutManager = LinearLayoutManager(activity)
-            adapter = this@EventsFragment.adapter
-            addItemDecoration(DividerItemDecoration(activity, LinearLayoutManager.VERTICAL))
-        }
+        val view = inflater.inflate(R.layout.fragment_recycler_view, container, false) as RecyclerView
+        this@EventsFragment.adapter.addSnapshotListener()
+        view.recycler_view.layoutManager = LinearLayoutManager(activity)
+        view.recycler_view.adapter = this@EventsFragment.adapter
+        view.recycler_view.addItemDecoration(DividerItemDecoration(activity, LinearLayoutManager.VERTICAL))
+
+        val simpleItemTouchCallback =
+            object : ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT or ItemTouchHelper.RIGHT){
+                override fun onMove(
+                    p0: RecyclerView,
+                    p1: RecyclerView.ViewHolder,
+                    p2: RecyclerView.ViewHolder
+                ): Boolean {
+                    return false                }
+
+                override fun onSwiped(viewHolder: RecyclerView.ViewHolder, p1: Int) {
+                    Log.d("message","Removed")
+                    adapter!!.remove(viewHolder!!.adapterPosition)                }
+
+            }
+        val itemTouchHelper = ItemTouchHelper(simpleItemTouchCallback)
+        itemTouchHelper.attachToRecyclerView(view.recycler_view)
+        return view
+
     }
 }

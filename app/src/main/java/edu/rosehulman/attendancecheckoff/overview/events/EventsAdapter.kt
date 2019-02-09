@@ -6,6 +6,7 @@ import android.support.v7.widget.RecyclerView
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import android.widget.Toast
 import com.google.firebase.Timestamp
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.Query
@@ -47,33 +48,11 @@ class EventsAdapter(val context: Context?) : RecyclerView.Adapter<EventsViewHold
                 }
                 getAllEvents(snapshot)
             }
-//        eventsRef
-//            .whereGreaterThanOrEqualTo(Event.KEY_DATE_TIME, Timestamp.now())
-//            .whereArrayContains(Event.KEY_ATTENDED_MEMBERS, CurrentState.user.id)
-//            .addSnapshotListener { snapshot, firestoreException ->
-//                if (firestoreException != null) {
-//                    Log.d(Constants.TAG, "Error: $firestoreException")
-//                    return@addSnapshotListener
-//                }
-//                populateLocalEvents(snapshot)
-//            }
     }
 
     private fun getAllEvents(snapshot: QuerySnapshot?) {
-//        snapshot?.let { snap ->
-//            snap.map { doc -> Club.fromSnapshot(doc) }.forEach { club ->
-//                eventsRef.whereEqualTo(Event.KEY_CLUB_ID, club.id).addSnapshotListener { snapshot, firestoreException ->
-//                    if (firestoreException != null) {
-//                        Log.d(Constants.TAG, "Error: $firestoreException")
-//                        return@addSnapshotListener
-//                    }
-//
-//                }
-//            }
-//        }
         eventsRef
             .whereGreaterThanOrEqualTo(Event.KEY_DATE_TIME, Timestamp.now())
-//            .whereArrayContains(Event.KEY_ATTENDED_MEMBERS, CurrentState.user.id)
             .orderBy(Event.KEY_DATE_TIME, Query.Direction.ASCENDING)
             .addSnapshotListener { snapshot2, firestoreException ->
                 if (firestoreException != null) {
@@ -114,12 +93,13 @@ class EventsAdapter(val context: Context?) : RecyclerView.Adapter<EventsViewHold
                     Log.d(Constants.TAG, "Error: $firestoreException")
                     return@addSnapshotListener
                 } else {
-                    for (document in snapshot!!) {
-                        val doc = Official.fromSnapshot(document)
-
-                        Log.d("IDs", doc.clubId + ": " + events[position].clubId)
-                        if (doc.clubId.equals(events[position].clubId)) {
-                            eventsRef.document(events[position].id).delete()
+                    snapshot?.let {
+                        it.map { doc -> Official.fromSnapshot(doc) }.forEach { official ->
+                            if (official.clubId == events[position].clubId) {
+                                eventsRef.document(events[position].id).delete()
+                            } else {
+                                Toast.makeText(context, "Missing authorization", Toast.LENGTH_LONG).show()
+                            }
                         }
                     }
                 }

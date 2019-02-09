@@ -43,7 +43,7 @@ data class Official(
     companion object CREATOR : Parcelable.Creator<Official> {
         const val KEY_COLLECTION = "officials"
         const val KEY_CLUB_ID = "clubId"
-        const val KEY_USER_ID = "userID"
+        const val KEY_USER_ID = "userId"
 
         override fun createFromParcel(parcel: Parcel) = Official(parcel)
 

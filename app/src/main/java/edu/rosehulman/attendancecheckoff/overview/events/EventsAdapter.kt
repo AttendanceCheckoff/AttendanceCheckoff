@@ -8,18 +8,21 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import com.google.firebase.Timestamp
 import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.firestore.Query
 import com.google.firebase.firestore.QuerySnapshot
 import edu.rosehulman.attendancecheckoff.CurrentState
 import edu.rosehulman.attendancecheckoff.R
 import edu.rosehulman.attendancecheckoff.event.EventActivity
+import edu.rosehulman.attendancecheckoff.model.Club
 import edu.rosehulman.attendancecheckoff.model.Event
 import edu.rosehulman.attendancecheckoff.model.Official
 import edu.rosehulman.attendancecheckoff.util.Constants
 
 class EventsAdapter(val context: Context?) : RecyclerView.Adapter<EventsViewHolder>() {
 
-    val eventsRef = FirebaseFirestore.getInstance().collection("events")
-    val officialRef = FirebaseFirestore.getInstance().collection("officials")
+    val eventsRef = FirebaseFirestore.getInstance().collection(Event.KEY_COLLECTION)
+    val officialRef = FirebaseFirestore.getInstance().collection(Official.KEY_COLLECTION)
+    val clubsRef = FirebaseFirestore.getInstance().collection(Club.KEY_COLLECTION)
 
     val events = ArrayList<Event>()
 
@@ -35,23 +38,63 @@ class EventsAdapter(val context: Context?) : RecyclerView.Adapter<EventsViewHold
     }
 
     fun addSnapshotListener() {
-        eventsRef
-            .whereGreaterThanOrEqualTo(Event.KEY_DATE_TIME, Timestamp.now())
-            .whereArrayContains(Event.KEY_ATTENDED_MEMBERS, CurrentState.user.id)
+        clubsRef
+            .whereArrayContains(Club.KEY_MEMBERS, CurrentState.user.id)
             .addSnapshotListener { snapshot, firestoreException ->
                 if (firestoreException != null) {
                     Log.d(Constants.TAG, "Error: $firestoreException")
                     return@addSnapshotListener
                 }
-                populateLocalEvents(snapshot)
+                getAllEvents(snapshot)
+            }
+//        eventsRef
+//            .whereGreaterThanOrEqualTo(Event.KEY_DATE_TIME, Timestamp.now())
+//            .whereArrayContains(Event.KEY_ATTENDED_MEMBERS, CurrentState.user.id)
+//            .addSnapshotListener { snapshot, firestoreException ->
+//                if (firestoreException != null) {
+//                    Log.d(Constants.TAG, "Error: $firestoreException")
+//                    return@addSnapshotListener
+//                }
+//                populateLocalEvents(snapshot)
+//            }
+    }
+
+    private fun getAllEvents(snapshot: QuerySnapshot?) {
+//        snapshot?.let { snap ->
+//            snap.map { doc -> Club.fromSnapshot(doc) }.forEach { club ->
+//                eventsRef.whereEqualTo(Event.KEY_CLUB_ID, club.id).addSnapshotListener { snapshot, firestoreException ->
+//                    if (firestoreException != null) {
+//                        Log.d(Constants.TAG, "Error: $firestoreException")
+//                        return@addSnapshotListener
+//                    }
+//
+//                }
+//            }
+//        }
+        eventsRef
+            .whereGreaterThanOrEqualTo(Event.KEY_DATE_TIME, Timestamp.now())
+//            .whereArrayContains(Event.KEY_ATTENDED_MEMBERS, CurrentState.user.id)
+            .orderBy(Event.KEY_DATE_TIME, Query.Direction.ASCENDING)
+            .addSnapshotListener { snapshot2, firestoreException ->
+                if (firestoreException != null) {
+                    Log.d(Constants.TAG, "Error: $firestoreException")
+                    return@addSnapshotListener
+                }
+                populateLocalEvents(snapshot, snapshot2)
             }
     }
 
-    private fun populateLocalEvents(snapshot: QuerySnapshot?) {
-        Log.d(Constants.TAG, "Populating Clubs")
+    private fun populateLocalEvents(clubSnapshot: QuerySnapshot?, eventSnapshot: QuerySnapshot?) {
+        Log.d(Constants.TAG, "Populating Events")
         events.clear()
-        snapshot?.let {
-            events.addAll(it.map { doc -> Event.fromSnapshot(doc) })
+        clubSnapshot?.let { clubSnap ->
+            clubSnap.map { doc -> Club.fromSnapshot(doc) }.forEach { club ->
+                Log.d(Constants.TAG, club.toString())
+                eventSnapshot?.let { eventSnap ->
+                    events.addAll(eventSnap.map { doc -> Event.fromSnapshot(doc) }.filter { event -> event.clubId == club.id })
+                    Log.d(Constants.TAG, events.toString())
+                }
+            }
             notifyDataSetChanged()
         }
     }
@@ -63,20 +106,19 @@ class EventsAdapter(val context: Context?) : RecyclerView.Adapter<EventsViewHold
         context?.startActivity(intent)
     }
 
-    fun remove(position: Int){
+    fun remove(position: Int) {
         officialRef
             .whereEqualTo(Official.KEY_USER_ID, CurrentState.user.id)
             .addSnapshotListener { snapshot, firestoreException ->
                 if (firestoreException != null) {
                     Log.d(Constants.TAG, "Error: $firestoreException")
                     return@addSnapshotListener
-                }
-                else{
-                    for (document in snapshot!!){
+                } else {
+                    for (document in snapshot!!) {
                         val doc = Official.fromSnapshot(document)
 
-                        Log.d("IDs", doc.clubId + ": "+ events[position].clubId)
-                        if (doc.clubId.equals(events[position].clubId)){
+                        Log.d("IDs", doc.clubId + ": " + events[position].clubId)
+                        if (doc.clubId.equals(events[position].clubId)) {
                             eventsRef.document(events[position].id).delete()
                         }
                     }

@@ -3,12 +3,10 @@ package edu.rosehulman.attendancecheckoff.event
 import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
+import android.support.v4.app.NavUtils
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.DividerItemDecoration
 import android.support.v7.widget.LinearLayoutManager
-import android.support.v7.widget.RecyclerView
-import android.support.v7.widget.helper.ItemTouchHelper
-import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import edu.rosehulman.attendancecheckoff.BarCodeActivity
@@ -31,6 +29,7 @@ class EventActivity : AppCompatActivity() {
 
         setSupportActionBar(event_toolbar)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
+        supportActionBar?.setDisplayShowHomeEnabled(true)
 
         event = intent.getParcelableExtra(Constants.ARG_INTENT_EVENT)
         supportActionBar?.title = event.name
@@ -59,6 +58,10 @@ class EventActivity : AppCompatActivity() {
                     barCodeIntent.type = Intent.ACTION_VIEW
                     startActivityForResult(barCodeIntent, BAR_CODE_REQUEST)
                 }
+                true
+            }
+            android.R.id.home -> {
+                NavUtils.navigateUpFromSameTask(this)
                 true
             }
             else -> super.onOptionsItemSelected(item)

@@ -15,8 +15,9 @@
                 android:layout_centerVertical="true"
                 android:layout_marginStart="10dp"
                 android:layout_marginLeft="10dp"
-                app:srcCompat="@drawable/default_image"
-                app:strokeWidth="2dp"
+                android:scaleType="centerInside"
+                app:srcCompat="@drawable/default_profile"
+                app:strokeWidth="1dp"
                 app:strokeColor="@android:color/darker_gray"/>
 
         <TextView

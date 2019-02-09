@@ -6,6 +6,7 @@ import android.support.v7.widget.RecyclerView
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import com.google.firebase.Timestamp
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.QuerySnapshot
 import edu.rosehulman.attendancecheckoff.CurrentState
@@ -35,6 +36,7 @@ class EventsAdapter(val context: Context?) : RecyclerView.Adapter<EventsViewHold
 
     fun addSnapshotListener() {
         eventsRef
+            .whereGreaterThanOrEqualTo(Event.KEY_DATE_TIME, Timestamp.now())
             .whereArrayContains(Event.KEY_ATTENDED_MEMBERS, CurrentState.user.id)
             .addSnapshotListener { snapshot, firestoreException ->
                 if (firestoreException != null) {

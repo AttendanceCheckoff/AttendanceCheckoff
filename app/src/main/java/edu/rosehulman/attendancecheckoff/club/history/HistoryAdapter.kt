@@ -8,7 +8,6 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.QuerySnapshot
-import edu.rosehulman.attendancecheckoff.CurrentState
 import edu.rosehulman.attendancecheckoff.R
 import edu.rosehulman.attendancecheckoff.event.EventActivity
 import edu.rosehulman.attendancecheckoff.model.Club
@@ -34,7 +33,7 @@ class HistoryAdapter(val context: Context?, val club: Club) : RecyclerView.Adapt
 
     fun selectEvent(position: Int) {
         val intent = Intent(context, EventActivity::class.java).apply {
-            putExtra("CLUB", events[position])
+            putExtra(Constants.ARG_INTENT_EVENT, events[position])
         }
         context?.startActivity(intent)
     }

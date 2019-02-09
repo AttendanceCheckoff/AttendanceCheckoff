@@ -1,36 +1,35 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                                             android:layout_width="match_parent"
-                                             android:layout_height="match_parent">
-
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
 
     <EditText
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_above="@id/Event_Description"
-            android:layout_centerHorizontal="true"
-            android:text="@string/event_name"
-            android:id="@+id/Event_Name"/>
-    <EditText
+            android:id="@+id/Event_Name"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_centerInParent="true"
-            android:text="@string/event_description"
-            android:textAlignment="center"
-            android:id="@+id/Event_Description"/>
+            android:layout_centerHorizontal="true"
+            android:hint="@string/event_name"
+            android:layout_alignParentTop="true"/>
     <EditText
-            android:layout_width="wrap_content"
+            android:id="@+id/Event_Description"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:hint="@string/event_description"
+            android:layout_below="@id/Event_Name"/>
+    <DatePicker
+            android:id="@+id/Event_Date"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@id/Event_Description"
             android:layout_centerHorizontal="true"
-            android:inputType="date"
-            android:id="@+id/Event_Date"/>
-    <EditText
-            android:layout_width="wrap_content"
+            android:inputType="date"/>
+    <TimePicker
+            android:id="@+id/Event_Time"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@id/Event_Date"
             android:layout_centerHorizontal="true"
             android:inputType="time"
-            android:ems="10"
-            android:id="@+id/Event_Time"/>
+            android:ems="10"/>
 </RelativeLayout>

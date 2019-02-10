@@ -2,9 +2,11 @@ package edu.rosehulman.attendancecheckoff.overview.events
 
 import android.content.Context
 import android.content.Intent
+import android.support.design.widget.Snackbar
 import android.support.v7.widget.RecyclerView
 import android.util.Log
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import com.google.firebase.Timestamp
@@ -52,7 +54,7 @@ class EventsAdapter(val context: Context?) : RecyclerView.Adapter<EventsViewHold
 
     private fun getAllEvents(snapshot: QuerySnapshot?) {
         eventsRef
-            .whereGreaterThanOrEqualTo(Event.KEY_DATE_TIME, Timestamp.now())
+            //.whereGreaterThanOrEqualTo(Event.KEY_DATE_TIME, Timestamp.now())
             .orderBy(Event.KEY_DATE_TIME, Query.Direction.ASCENDING)
             .addSnapshotListener { snapshot2, firestoreException ->
                 if (firestoreException != null) {
@@ -96,7 +98,11 @@ class EventsAdapter(val context: Context?) : RecyclerView.Adapter<EventsViewHold
                     snapshot?.let {
                         it.map { doc -> Official.fromSnapshot(doc) }.forEach { official ->
                             if (official.clubId == events[position].clubId) {
+                                var temp = events[position]
                                 eventsRef.document(events[position].id).delete()
+                                Snackbar.make(View(context),"Are you sure you want to delete?", Snackbar.LENGTH_LONG).setAction("undo"){
+                                    eventsRef.add(temp)
+                                }.show()
                             } else {
                                 Toast.makeText(context, "Missing authorization", Toast.LENGTH_LONG).show()
                             }

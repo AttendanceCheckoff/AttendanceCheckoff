@@ -26,8 +26,11 @@ import edu.rosehulman.attendancecheckoff.model.User
 import edu.rosehulman.attendancecheckoff.util.Constants
 import edu.rosehulman.attendancecheckoff.util.Constants.BAR_CODE_REQUEST
 import edu.rosehulman.attendancecheckoff.util.FirebaseUtils
+import edu.rosehulman.attendancecheckoff.util.getDate
+import kotlinx.android.synthetic.main.add_date.view.*
 import kotlinx.android.synthetic.main.add_event.view.*
 import kotlinx.android.synthetic.main.club_activity.*
+import java.util.*
 
 class ClubActivity : AppCompatActivity() {
 
@@ -69,25 +72,43 @@ class ClubActivity : AppCompatActivity() {
                 }
                 true
             }
+            R.id.action_export -> {
+                true
+            }
             R.id.action_add_event -> {
                 AlertDialog.Builder(this).apply {
                     setTitle("Add new Event")
                     val view = LayoutInflater.from(this@ClubActivity).inflate(R.layout.add_event, null, false)
                     setView(view)
                     setPositiveButton(android.R.string.ok) { dialog, which ->
-                        val date = view.Event_Date.minDate
-                        val time = view.Event_Time.drawingTime
+                        var selectedDate: Date? = null
+//                        getDateDialog { date ->
+//                            selectedDate = date
+//                        }
                         val event = Event(
                             name = view.Event_Name.text.toString(),
                             description = view.Event_Description.text.toString()
                         )
-                        Log.d(Constants.TAG, "Event: $event, Date: $date, Time: $time")
+                        Log.d(Constants.TAG, "Event: $event, Date: $selectedDate")
                     }
+                    setNegativeButton(android.R.string.cancel) { dialog, which ->  }
                 }.create().show()
                 true
             }
             else -> super.onOptionsItemSelected(item)
         }
+
+    fun getDateDialog(action: (Date) -> Unit) {
+        AlertDialog.Builder(this).apply {
+            setTitle("Set Date")
+            val view = LayoutInflater.from(this@ClubActivity).inflate(R.layout.add_date, null, false)
+            setView(view)
+            setPositiveButton(android.R.string.ok) { _, _ ->
+                action(view.Event_Date.getDate())
+            }
+            setNegativeButton(android.R.string.cancel) { _, _ ->  }
+        }.create().show()
+    }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         if (requestCode == BAR_CODE_REQUEST) {
@@ -99,8 +120,8 @@ class ClubActivity : AppCompatActivity() {
             }
         }
     }
-
     inner class SectionsPagerAdapter(fm: FragmentManager) : FragmentPagerAdapter(fm) {
+
         override fun getItem(position: Int): Fragment = when (position) {
             0 -> OfficialsFragment.newInstance(club)
             1 -> MembersFragment.newInstance(club)
@@ -108,7 +129,7 @@ class ClubActivity : AppCompatActivity() {
             3 -> HistoryFragment.newInstance(club)
             else -> OfficialsFragment.newInstance(club)
         }
-
         override fun getCount() = 4
+
     }
 }

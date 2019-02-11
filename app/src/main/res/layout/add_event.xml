@@ -17,19 +17,4 @@
             android:layout_centerHorizontal="true"
             android:hint="@string/event_description"
             android:layout_below="@id/Event_Name"/>
-    <DatePicker
-            android:id="@+id/Event_Date"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/Event_Description"
-            android:layout_centerHorizontal="true"
-            android:inputType="date"/>
-    <TimePicker
-            android:id="@+id/Event_Time"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/Event_Date"
-            android:layout_centerHorizontal="true"
-            android:inputType="time"
-            android:ems="10"/>
 </RelativeLayout>

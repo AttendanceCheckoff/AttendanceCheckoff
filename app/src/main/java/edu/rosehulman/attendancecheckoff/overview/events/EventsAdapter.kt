@@ -9,7 +9,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
-import com.google.firebase.Timestamp
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.Query
 import com.google.firebase.firestore.QuerySnapshot
@@ -98,10 +97,10 @@ class EventsAdapter(val context: Context?) : RecyclerView.Adapter<EventsViewHold
                     snapshot?.let {
                         it.map { doc -> Official.fromSnapshot(doc) }.forEach { official ->
                             if (official.clubId == events[position].clubId) {
-                                var temp = events[position]
+                                val event = events[position]
                                 eventsRef.document(events[position].id).delete()
                                 Snackbar.make(View(context),"Are you sure you want to delete?", Snackbar.LENGTH_LONG).setAction("undo"){
-                                    eventsRef.add(temp)
+                                    eventsRef.add(event)
                                 }.show()
                             } else {
                                 Toast.makeText(context, "Missing authorization", Toast.LENGTH_LONG).show()

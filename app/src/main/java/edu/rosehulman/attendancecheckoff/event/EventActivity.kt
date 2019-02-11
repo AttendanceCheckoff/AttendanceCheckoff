@@ -1,6 +1,10 @@
 package edu.rosehulman.attendancecheckoff.event
 
 import android.app.Activity
+import android.app.AlarmManager
+import android.app.Notification
+import android.app.PendingIntent
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.support.v4.app.NavUtils
@@ -16,6 +20,7 @@ import edu.rosehulman.attendancecheckoff.util.Constants
 import edu.rosehulman.attendancecheckoff.util.Constants.BAR_CODE_REQUEST
 import edu.rosehulman.attendancecheckoff.util.FirebaseUtils
 import kotlinx.android.synthetic.main.event_activity.*
+import java.util.*
 
 class EventActivity : AppCompatActivity() {
 
@@ -41,6 +46,22 @@ class EventActivity : AppCompatActivity() {
         attended_members.layoutManager = LinearLayoutManager(this)
         attended_members.adapter = adapter
         attended_members.addItemDecoration(DividerItemDecoration(this, LinearLayoutManager.VERTICAL))
+
+        val intent = Intent(this, MyNotification(event)::class.java)
+        val alarmManager = getSystemService(Context.ALARM_SERVICE) as AlarmManager
+        val pendingIntent = PendingIntent.getService(this, 0, intent, 0)
+
+        val calendar = Calendar.getInstance()
+        calendar.set(Calendar.SECOND, event.dateTime.toDate().seconds)
+        calendar.set(Calendar.MINUTE, event.dateTime.toDate().minutes - 15)
+        calendar.set(Calendar.HOUR, event.dateTime.toDate().hours)
+        calendar.set(Calendar.DATE, event.dateTime.toDate().date)
+
+        alarmManager.set(AlarmManager.RTC_WAKEUP, calendar.timeInMillis, pendingIntent)
+
+
+
+
 
 
     }

@@ -20,6 +20,7 @@ import edu.rosehulman.attendancecheckoff.util.Constants
 import edu.rosehulman.attendancecheckoff.util.Constants.RC_ROSEFIRE_LOGIN
 import edu.rosehulman.rosefire.Rosefire
 import kotlinx.android.synthetic.main.main_activity.*
+import java.util.*
 
 class MainActivity : AppCompatActivity() {
 
@@ -126,7 +127,8 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun initializeData(){
-        eventsRef.add(Event("Election", Timestamp.now(), "Election of President", arrayListOf(), "PE8m5Y5kYmN6tMKx21mt"))
+        val date = Date(2019, 2, 11, 17, 0)
+        eventsRef.add(Event("Test", Timestamp(date), "Test Notification", arrayListOf(), "PE8m5Y5kYmN6tMKx21mt"))
 //        eventsRef.add(Event("Team meeting", Timestamp.now(), "Deciding team roster", arrayListOf(), "XjEQEzGdBNkVgXvI6OKE"))
 //        eventsRef.add(Event("General", Timestamp.now(), "General", arrayListOf(), "XjEQEzGdBNkVgXvI6OKE"))
 //        eventsRef.add(Event("Trophy ceremony", Timestamp.now(), "Handing trophies to winners", arrayListOf(), "XjEQEzGdBNkVgXvI6OKE"))

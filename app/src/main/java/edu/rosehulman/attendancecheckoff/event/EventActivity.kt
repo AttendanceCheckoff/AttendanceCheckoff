@@ -11,6 +11,7 @@ import android.support.v4.app.NavUtils
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.DividerItemDecoration
 import android.support.v7.widget.LinearLayoutManager
+import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import edu.rosehulman.attendancecheckoff.BarCodeActivity
@@ -25,6 +26,10 @@ import java.util.*
 class EventActivity : AppCompatActivity() {
 
     lateinit var event: Event
+    val alarmManager = getSystemService(Context.ALARM_SERVICE) as AlarmManager
+    val myIntent = Intent(this, MyNotification(event)::class.java)
+
+    val pendingIntent = PendingIntent.getService(this, 0, myIntent, 0)
 
     lateinit var adapter: EventAdapter
 
@@ -33,8 +38,13 @@ class EventActivity : AppCompatActivity() {
         setContentView(R.layout.event_activity)
 
         reminder.setOnCheckedChangeListener { buttonView, isChecked ->
+            Log.d(Constants.TAG, isChecked.toString())
             if (isChecked){
+
                 setNotification()
+            }
+            else{
+                cancelNotification()
             }
         }
 
@@ -90,9 +100,7 @@ class EventActivity : AppCompatActivity() {
     }
 
     private fun setNotification(){
-        val intent = Intent(this, MyNotification(event)::class.java)
-        val alarmManager = getSystemService(Context.ALARM_SERVICE) as AlarmManager
-        val pendingIntent = PendingIntent.getService(this, 0, intent, 0)
+
 
         val calendar = Calendar.getInstance()
         calendar.set(Calendar.SECOND, event.dateTime.toDate().seconds)
@@ -101,5 +109,9 @@ class EventActivity : AppCompatActivity() {
         calendar.set(Calendar.DATE, event.dateTime.toDate().date)
 
         alarmManager.set(AlarmManager.RTC_WAKEUP, calendar.timeInMillis, pendingIntent)
+    }
+
+    private fun cancelNotification(){
+        alarmManager.cancel(pendingIntent)
     }
 }

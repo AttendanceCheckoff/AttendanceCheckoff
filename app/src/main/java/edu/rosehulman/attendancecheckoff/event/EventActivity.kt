@@ -32,6 +32,12 @@ class EventActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.event_activity)
 
+        reminder.setOnCheckedChangeListener { buttonView, isChecked ->
+            if (isChecked){
+                setNotification()
+            }
+        }
+
         setSupportActionBar(event_toolbar)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         supportActionBar?.setDisplayShowHomeEnabled(true)
@@ -46,22 +52,6 @@ class EventActivity : AppCompatActivity() {
         attended_members.layoutManager = LinearLayoutManager(this)
         attended_members.adapter = adapter
         attended_members.addItemDecoration(DividerItemDecoration(this, LinearLayoutManager.VERTICAL))
-
-        val intent = Intent(this, MyNotification(event)::class.java)
-        val alarmManager = getSystemService(Context.ALARM_SERVICE) as AlarmManager
-        val pendingIntent = PendingIntent.getService(this, 0, intent, 0)
-
-        val calendar = Calendar.getInstance()
-        calendar.set(Calendar.SECOND, event.dateTime.toDate().seconds)
-        calendar.set(Calendar.MINUTE, event.dateTime.toDate().minutes - 15)
-        calendar.set(Calendar.HOUR, event.dateTime.toDate().hours)
-        calendar.set(Calendar.DATE, event.dateTime.toDate().date)
-
-        alarmManager.set(AlarmManager.RTC_WAKEUP, calendar.timeInMillis, pendingIntent)
-
-
-
-
 
 
     }
@@ -97,5 +87,19 @@ class EventActivity : AppCompatActivity() {
                 }
             }
         }
+    }
+
+    private fun setNotification(){
+        val intent = Intent(this, MyNotification(event)::class.java)
+        val alarmManager = getSystemService(Context.ALARM_SERVICE) as AlarmManager
+        val pendingIntent = PendingIntent.getService(this, 0, intent, 0)
+
+        val calendar = Calendar.getInstance()
+        calendar.set(Calendar.SECOND, event.dateTime.toDate().seconds)
+        calendar.set(Calendar.MINUTE, event.dateTime.toDate().minutes - 15)
+        calendar.set(Calendar.HOUR, event.dateTime.toDate().hours)
+        calendar.set(Calendar.DATE, event.dateTime.toDate().date)
+
+        alarmManager.set(AlarmManager.RTC_WAKEUP, calendar.timeInMillis, pendingIntent)
     }
 }

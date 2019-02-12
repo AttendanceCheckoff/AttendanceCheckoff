@@ -1,14 +1,9 @@
 package edu.rosehulman.attendancecheckoff.event
 
 import android.app.Activity
-import android.app.AlarmManager
-import android.app.Notification
-import android.app.PendingIntent
-import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.provider.CalendarContract
-import android.support.v4.app.NavUtils
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.DividerItemDecoration
 import android.support.v7.widget.LinearLayoutManager
@@ -23,7 +18,6 @@ import edu.rosehulman.attendancecheckoff.util.Constants
 import edu.rosehulman.attendancecheckoff.util.Constants.BAR_CODE_REQUEST
 import edu.rosehulman.attendancecheckoff.util.FirebaseUtils
 import kotlinx.android.synthetic.main.event_activity.*
-import java.util.*
 
 class EventActivity : AppCompatActivity() {
 
@@ -80,7 +74,7 @@ class EventActivity : AppCompatActivity() {
                 true
             }
             android.R.id.home -> {
-                NavUtils.navigateUpFromSameTask(this)
+                finish()
                 true
             }
             else -> super.onOptionsItemSelected(item)

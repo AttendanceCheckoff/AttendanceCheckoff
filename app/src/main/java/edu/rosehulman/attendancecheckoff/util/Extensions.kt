@@ -1,7 +1,9 @@
 package edu.rosehulman.attendancecheckoff.util
 
 import android.os.Parcel
+import android.util.Log
 import android.widget.DatePicker
+import android.widget.TimePicker
 import com.google.firebase.Timestamp
 import java.text.SimpleDateFormat
 import java.util.*
@@ -19,5 +21,13 @@ fun DatePicker.getDate(): Date {
     Calendar.getInstance().apply {
         set(year, month, dayOfMonth)
         return time
+    }
+}
+
+fun TimePicker.getTimestamp(date: Date): Timestamp {
+    Calendar.getInstance().apply {
+        set(date.year, date.month, date.day, hour, minute)
+        Log.d(Constants.TAG, "Date: $time")
+        return Timestamp(time)
     }
 }

@@ -34,4 +34,11 @@ object FirebaseUtils {
             clubRef.document(club.id).set(club)
         }
     }
+
+    fun addEventToClub(club: Club, event: Event) {
+        eventRef.add(event).addOnSuccessListener { doc ->
+            club.events.add(doc.id)
+            clubRef.document(club.id).set(club)
+        }
+    }
 }

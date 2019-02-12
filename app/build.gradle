@@ -8,7 +8,7 @@ android {
     compileSdkVersion 28
     defaultConfig {
         applicationId "edu.rosehulman.attendancecheckoff"
-        minSdkVersion 16
+        minSdkVersion 23
         targetSdkVersion 28
         versionCode 1
         versionName "1.0"
@@ -39,8 +39,8 @@ dependencies {
     implementation 'com.google.firebase:firebase-ml-vision:18.0.2'
     implementation 'com.google.zxing:core:3.2.1'
     implementation 'com.journeyapps:zxing-android-embedded:3.2.0@aar'
+    implementation 'com.opencsv:opencsv:4.5'
     implementation 'edu.rosehulman.csse.rosefire:rosefire-android-client:2.1.0'
-//    implementation 'de.hdodenhof:circleimageview:3.0.0'
     implementation 'com.github.abdularis:CircularImageView:v1.2'
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
     implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-android:1.0.0'

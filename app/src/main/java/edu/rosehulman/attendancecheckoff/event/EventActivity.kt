@@ -108,18 +108,8 @@ class EventActivity : AppCompatActivity() {
             .putExtra(CalendarContract.Reminders.MINUTES, 15)
             .putExtra(Intent.EXTRA_EMAIL, CurrentState.user.username+"@rose-hulman.edu")
         startActivity(intent)
-
-
-//        val calendar = Calendar.getInstance()
-//        calendar.set(Calendar.SECOND, event.dateTime.toDate().seconds)
-//        calendar.set(Calendar.MINUTE, event.dateTime.toDate().minutes - 5)
-//        calendar.set(Calendar.HOUR, event.dateTime.toDate().hours)
-//        calendar.set(Calendar.DATE, event.dateTime.toDate().date)
-//
-//        alarmManager.set(AlarmManager.RTC_WAKEUP, calendar.timeInMillis, pendingIntent)
     }
 
     private fun cancelNotification(){
-//        alarmManager.cancel(pendingIntent)
     }
 }

@@ -105,6 +105,7 @@ class EventActivity : AppCompatActivity() {
             .putExtra(CalendarContract.Events.TITLE, event.name)
             .putExtra(CalendarContract.Events.DESCRIPTION, event.description)
             .putExtra(CalendarContract.Events.AVAILABILITY, CalendarContract.Events.AVAILABILITY_BUSY)
+            .putExtra(CalendarContract.Reminders.MINUTES, 15)
             .putExtra(Intent.EXTRA_EMAIL, CurrentState.user.username+"@rose-hulman.edu")
         startActivity(intent)
 

@@ -7,6 +7,7 @@ import android.app.PendingIntent
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import android.provider.CalendarContract
 import android.support.v4.app.NavUtils
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.DividerItemDecoration
@@ -15,6 +16,7 @@ import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import edu.rosehulman.attendancecheckoff.BarCodeActivity
+import edu.rosehulman.attendancecheckoff.CurrentState
 import edu.rosehulman.attendancecheckoff.R
 import edu.rosehulman.attendancecheckoff.model.Event
 import edu.rosehulman.attendancecheckoff.util.Constants
@@ -26,10 +28,10 @@ import java.util.*
 class EventActivity : AppCompatActivity() {
 
     lateinit var event: Event
-    val alarmManager = getSystemService(Context.ALARM_SERVICE) as AlarmManager
-    val myIntent = Intent(this, MyNotification(event)::class.java)
-
-    val pendingIntent = PendingIntent.getService(this, 0, myIntent, 0)
+//    val alarmManager = getSystemService(Context.ALARM_SERVICE) as AlarmManager
+//    val myIntent = Intent(this, MyNotification(event)::class.java)
+//
+//    val pendingIntent = PendingIntent.getService(this, 0, myIntent, 0)
 
     lateinit var adapter: EventAdapter
 
@@ -40,11 +42,7 @@ class EventActivity : AppCompatActivity() {
         reminder.setOnCheckedChangeListener { buttonView, isChecked ->
             Log.d(Constants.TAG, isChecked.toString())
             if (isChecked){
-
                 setNotification()
-            }
-            else{
-                cancelNotification()
             }
         }
 
@@ -100,18 +98,27 @@ class EventActivity : AppCompatActivity() {
     }
 
     private fun setNotification(){
+        val startMillis = event.dateTime.toDate().time
+        val intent = Intent(Intent.ACTION_INSERT)
+            .setData(CalendarContract.Events.CONTENT_URI)
+            .putExtra(CalendarContract.EXTRA_EVENT_BEGIN_TIME, startMillis)
+            .putExtra(CalendarContract.Events.TITLE, event.name)
+            .putExtra(CalendarContract.Events.DESCRIPTION, event.description)
+            .putExtra(CalendarContract.Events.AVAILABILITY, CalendarContract.Events.AVAILABILITY_BUSY)
+            .putExtra(Intent.EXTRA_EMAIL, CurrentState.user.username+"@rose-hulman.edu")
+        startActivity(intent)
 
 
-        val calendar = Calendar.getInstance()
-        calendar.set(Calendar.SECOND, event.dateTime.toDate().seconds)
-        calendar.set(Calendar.MINUTE, event.dateTime.toDate().minutes - 5)
-        calendar.set(Calendar.HOUR, event.dateTime.toDate().hours)
-        calendar.set(Calendar.DATE, event.dateTime.toDate().date)
-
-        alarmManager.set(AlarmManager.RTC_WAKEUP, calendar.timeInMillis, pendingIntent)
+//        val calendar = Calendar.getInstance()
+//        calendar.set(Calendar.SECOND, event.dateTime.toDate().seconds)
+//        calendar.set(Calendar.MINUTE, event.dateTime.toDate().minutes - 5)
+//        calendar.set(Calendar.HOUR, event.dateTime.toDate().hours)
+//        calendar.set(Calendar.DATE, event.dateTime.toDate().date)
+//
+//        alarmManager.set(AlarmManager.RTC_WAKEUP, calendar.timeInMillis, pendingIntent)
     }
 
     private fun cancelNotification(){
-        alarmManager.cancel(pendingIntent)
+//        alarmManager.cancel(pendingIntent)
     }
 }

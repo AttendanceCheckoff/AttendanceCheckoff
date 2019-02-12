@@ -9,6 +9,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import com.google.firebase.Timestamp
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.Query
 import com.google.firebase.firestore.QuerySnapshot
@@ -53,7 +54,7 @@ class EventsAdapter(val context: Context?) : RecyclerView.Adapter<EventsViewHold
 
     private fun getAllEvents(snapshot: QuerySnapshot?) {
         eventsRef
-            //.whereGreaterThanOrEqualTo(Event.KEY_DATE_TIME, Timestamp.now())
+            .whereGreaterThanOrEqualTo(Event.KEY_DATE_TIME, Timestamp.now())
             .orderBy(Event.KEY_DATE_TIME, Query.Direction.ASCENDING)
             .addSnapshotListener { snapshot2, firestoreException ->
                 if (firestoreException != null) {

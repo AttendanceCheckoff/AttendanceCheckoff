@@ -10,6 +10,7 @@ import android.support.v7.widget.LinearLayoutManager
 import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
+import com.google.firebase.Timestamp
 import edu.rosehulman.attendancecheckoff.BarCodeActivity
 import edu.rosehulman.attendancecheckoff.CurrentState
 import edu.rosehulman.attendancecheckoff.R
@@ -33,13 +34,6 @@ class EventActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.event_activity)
 
-        reminder.setOnCheckedChangeListener { buttonView, isChecked ->
-            Log.d(Constants.TAG, isChecked.toString())
-            if (isChecked){
-                setNotification()
-            }
-        }
-
         setSupportActionBar(event_toolbar)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         supportActionBar?.setDisplayShowHomeEnabled(true)
@@ -54,6 +48,17 @@ class EventActivity : AppCompatActivity() {
         attended_members.layoutManager = LinearLayoutManager(this)
         attended_members.adapter = adapter
         attended_members.addItemDecoration(DividerItemDecoration(this, LinearLayoutManager.VERTICAL))
+
+        if (event.dateTime < Timestamp.now()){
+            reminder.isClickable = false
+        }
+
+        reminder.setOnCheckedChangeListener { buttonView, isChecked ->
+            Log.d(Constants.TAG, isChecked.toString())
+            if (isChecked){
+                setNotification()
+            }
+        }
 
 
     }
@@ -92,7 +97,7 @@ class EventActivity : AppCompatActivity() {
     }
 
     private fun setNotification(){
-        val startMillis = event.dateTime.toDate().time
+        val startMillis = event.dateTime.nanoseconds
         val intent = Intent(Intent.ACTION_INSERT)
             .setData(CalendarContract.Events.CONTENT_URI)
             .putExtra(CalendarContract.EXTRA_EVENT_BEGIN_TIME, startMillis)

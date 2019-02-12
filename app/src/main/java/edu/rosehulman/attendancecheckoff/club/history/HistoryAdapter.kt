@@ -6,6 +6,7 @@ import android.support.v7.widget.RecyclerView
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import com.google.firebase.Timestamp
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.QuerySnapshot
 import edu.rosehulman.attendancecheckoff.R
@@ -40,6 +41,7 @@ class HistoryAdapter(val context: Context?, val club: Club) : RecyclerView.Adapt
 
     fun addSnapshotListener() {
         eventsRef
+            .whereLessThanOrEqualTo(Event.KEY_DATE_TIME, Timestamp.now())
             .whereEqualTo(Event.KEY_CLUB_ID, club.id)
             .addSnapshotListener { snapshot, firestoreException ->
                 if (firestoreException != null) {

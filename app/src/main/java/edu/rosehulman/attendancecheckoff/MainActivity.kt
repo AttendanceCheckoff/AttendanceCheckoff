@@ -58,13 +58,11 @@ class MainActivity : AppCompatActivity() {
             supportFragmentManager.beginTransaction().replace(R.id.content, fragment).commit()
             true
         }
-        Log.e(Constants.TAG, "onCreate")
         auth.addAuthStateListener(authListener)
     }
 
     override fun onDestroy() {
         super.onDestroy()
-        Log.e(Constants.TAG, "onDestroy")
         auth.removeAuthStateListener(authListener)
     }
 

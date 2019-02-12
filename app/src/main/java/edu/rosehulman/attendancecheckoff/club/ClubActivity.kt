@@ -21,11 +21,8 @@ import edu.rosehulman.attendancecheckoff.club.officials.OfficialsFragment
 import edu.rosehulman.attendancecheckoff.club.personal.PersonalFragment
 import edu.rosehulman.attendancecheckoff.model.Club
 import edu.rosehulman.attendancecheckoff.model.Event
-import edu.rosehulman.attendancecheckoff.util.Constants
+import edu.rosehulman.attendancecheckoff.util.*
 import edu.rosehulman.attendancecheckoff.util.Constants.BAR_CODE_REQUEST
-import edu.rosehulman.attendancecheckoff.util.FirebaseUtils
-import edu.rosehulman.attendancecheckoff.util.getDate
-import edu.rosehulman.attendancecheckoff.util.getTimestamp
 import kotlinx.android.synthetic.main.add_date.view.*
 import kotlinx.android.synthetic.main.add_event.view.*
 import kotlinx.android.synthetic.main.add_time.view.*
@@ -71,6 +68,7 @@ class ClubActivity : AppCompatActivity() {
                 true
             }
             R.id.action_export -> {
+                CSVGenerator(club, this).exportData()
                 true
             }
             R.id.action_add_event -> {
@@ -78,13 +76,13 @@ class ClubActivity : AppCompatActivity() {
                     setTitle("Add new Event")
                     val view = LayoutInflater.from(this@ClubActivity).inflate(R.layout.add_event, null, false)
                     setView(view)
-                    setPositiveButton(android.R.string.ok) { dialog, which ->
+                    setPositiveButton(android.R.string.ok) { _, _ ->
                         showDateDialog(
                             name = view.Event_Name.text.toString(),
                             description = view.Event_Description.text.toString()
                         )
                     }
-                    setNegativeButton(android.R.string.cancel) { dialog, which -> }
+                    setNegativeButton(android.R.string.cancel) { _, _ -> }
                 }.create().show()
                 true
             }

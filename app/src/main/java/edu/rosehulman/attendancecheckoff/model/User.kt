@@ -49,6 +49,7 @@ data class User(
         const val KEY_USERNAME = "username"
         const val KEY_STUDENT_ID = "studentID"
         const val KEY_EVENTS = "attendedEvents"
+        const val KEY_CLUBS = "clubs"
 
         override fun createFromParcel(parcel: Parcel): User {
             return User(parcel)

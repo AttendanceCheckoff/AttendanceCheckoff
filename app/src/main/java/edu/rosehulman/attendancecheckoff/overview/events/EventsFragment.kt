@@ -11,16 +11,16 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import edu.rosehulman.attendancecheckoff.R
-import kotlinx.android.synthetic.main.event_activity.*
 import kotlinx.android.synthetic.main.fragment_recycler_view.view.*
 
 class EventsFragment : Fragment() {
 
-    val adapter by lazy { EventsAdapter(activity) }
+    lateinit var adapter: EventsAdapter
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val view = inflater.inflate(R.layout.fragment_recycler_view, container, false) as RecyclerView
-        this@EventsFragment.adapter.addSnapshotListener()
+        adapter = EventsAdapter(activity, view)
+        adapter.addSnapshotListener()
         view.recycler_view.layoutManager = LinearLayoutManager(activity)
         view.recycler_view.adapter = this@EventsFragment.adapter
         view.recycler_view.addItemDecoration(DividerItemDecoration(activity, LinearLayoutManager.VERTICAL))

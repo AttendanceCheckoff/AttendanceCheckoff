@@ -21,7 +21,7 @@ import edu.rosehulman.attendancecheckoff.model.Event
 import edu.rosehulman.attendancecheckoff.model.Official
 import edu.rosehulman.attendancecheckoff.util.Constants
 
-class EventsAdapter(val context: Context?) : RecyclerView.Adapter<EventsViewHolder>() {
+class EventsAdapter(val context: Context?, val view: View) : RecyclerView.Adapter<EventsViewHolder>() {
 
     val eventsRef = FirebaseFirestore.getInstance().collection(Event.KEY_COLLECTION)
     val officialRef = FirebaseFirestore.getInstance().collection(Official.KEY_COLLECTION)
@@ -96,18 +96,19 @@ class EventsAdapter(val context: Context?) : RecyclerView.Adapter<EventsViewHold
                     return@addSnapshotListener
                 } else {
                     snapshot?.let {
-                        it.map { doc -> Official.fromSnapshot(doc) }.forEach { official ->
-                            if (official.clubId == events[position].clubId) {
-                                val event = events[position]
-                                eventsRef.document(events[position].id).delete()
-                                Snackbar.make(View(context),"Are you sure you want to delete?", Snackbar.LENGTH_LONG).setAction("undo"){
+                        val officials = it.map { doc -> Official.fromSnapshot(doc) }
+                        if (officials.any { official ->  official.clubId == events[position].clubId }) {
+                            val event = events[position]
+                            eventsRef.document(events[position].id).delete()
+                            Snackbar.make(view, "Are you sure you want to delete?", Snackbar.LENGTH_INDEFINITE)
+                                .setAction("undo") {
                                     eventsRef.add(event)
                                 }.show()
-                            } else {
-                                Toast.makeText(context, "Missing authorization", Toast.LENGTH_LONG).show()
-                            }
+                        } else {
+                            Toast.makeText(context, "Missing authorization", Toast.LENGTH_LONG).show()
                         }
                     }
+
                 }
             }
         notifyDataSetChanged()

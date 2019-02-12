@@ -37,5 +37,6 @@
     <string name="event_description">Event Description</string>
     <string name="action_add_event">Add Event</string>
     <string name="action_export">Export Data</string>
+    <string name="email_subject">Attendance Checkoff Export</string>
 
 </resources>

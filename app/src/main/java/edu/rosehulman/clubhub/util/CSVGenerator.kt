@@ -30,7 +30,7 @@ class CSVGenerator(val club: Club, val context: Activity) {
             type = "text/plain"
             putExtra(Intent.EXTRA_EMAIL, arrayOf(context.getString(R.string.email_domain, CurrentState.user.username)))
             putExtra(Intent.EXTRA_SUBJECT, context.getString(R.string.email_subject))
-            putExtra(Intent.EXTRA_TEXT, "body")
+            putExtra(Intent.EXTRA_TEXT, "Attached is the exported attendance data from the ${club.name} club")
 
             putExtra(Intent.EXTRA_STREAM, Uri.fromFile(File(csvFile)))
             context.startActivity(Intent.createChooser(this, "Choose your Email provider"))

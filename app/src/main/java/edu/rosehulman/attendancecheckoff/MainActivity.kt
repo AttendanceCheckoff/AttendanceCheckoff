@@ -119,11 +119,13 @@ class MainActivity : AppCompatActivity() {
         userRef.whereEqualTo(User.KEY_USERNAME, user.uid).get().addOnSuccessListener { snapshot ->
             if (snapshot.documents.isEmpty()) {
                 FirebaseUtils.showNewUserDialogWithUsername(this, user.uid) { user ->
-                    userRef.add(user)
-                    CurrentState.user = user
-                    supportActionBar?.title = CurrentState.user.name
+                    userRef.add(user).addOnSuccessListener {
+                        user.id = it.id
+                        CurrentState.user = user
+                        supportActionBar?.title = CurrentState.user.name
 
-                    supportFragmentManager.beginTransaction().replace(R.id.content, ClubsFragment()).commit()
+                        supportFragmentManager.beginTransaction().replace(R.id.content, ClubsFragment()).commit()
+                    }
                 }
             } else {
                 CurrentState.user = User.fromSnapshot(snapshot.documents.first())

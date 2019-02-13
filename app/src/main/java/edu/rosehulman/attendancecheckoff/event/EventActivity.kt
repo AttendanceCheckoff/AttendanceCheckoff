@@ -11,10 +11,12 @@ import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import com.google.firebase.Timestamp
+import com.google.firebase.firestore.FirebaseFirestore
 import edu.rosehulman.attendancecheckoff.BarCodeActivity
 import edu.rosehulman.attendancecheckoff.CurrentState
 import edu.rosehulman.attendancecheckoff.R
 import edu.rosehulman.attendancecheckoff.model.Event
+import edu.rosehulman.attendancecheckoff.model.Official
 import edu.rosehulman.attendancecheckoff.util.Constants
 import edu.rosehulman.attendancecheckoff.util.Constants.BAR_CODE_REQUEST
 import edu.rosehulman.attendancecheckoff.util.FirebaseUtils
@@ -23,12 +25,10 @@ import kotlinx.android.synthetic.main.event_activity.*
 class EventActivity : AppCompatActivity() {
 
     lateinit var event: Event
-//    val alarmManager = getSystemService(Context.ALARM_SERVICE) as AlarmManager
-//    val myIntent = Intent(this, MyNotification(event)::class.java)
-//
-//    val pendingIntent = PendingIntent.getService(this, 0, myIntent, 0)
-
     lateinit var adapter: EventAdapter
+    lateinit var activityMenu: Menu
+
+    val officialsRef by lazy { FirebaseFirestore.getInstance().collection(Official.KEY_COLLECTION) }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -59,18 +59,29 @@ class EventActivity : AppCompatActivity() {
                 setNotification()
             }
         }
-
-
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
-        menuInflater.inflate(R.menu.menu_club, menu)
+        menuInflater.inflate(R.menu.menu_event, menu)
+        activityMenu = menu
+        checkOfficial()
         return true
+    }
+
+    private fun checkOfficial() {
+        officialsRef.whereEqualTo(Official.KEY_USER_ID, CurrentState.user.id).addSnapshotListener { snapshot, exception ->
+            if (exception != null) {
+                return@addSnapshotListener
+            }
+            snapshot?.let {
+                activityMenu.findItem(R.id.action_qrcode).isVisible =
+                    snapshot.map { doc -> Official.fromSnapshot(doc) }.any { it.clubId == event.clubId}
+            }
+        }
     }
 
     override fun onOptionsItemSelected(item: MenuItem) =
         when (item.itemId) {
-            R.id.action_settings -> true
             R.id.action_qrcode -> {
                 Intent(this, BarCodeActivity::class.java).also { barCodeIntent ->
                     barCodeIntent.type = Intent.ACTION_VIEW

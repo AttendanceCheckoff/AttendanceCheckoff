@@ -13,7 +13,9 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.Menu
 import android.view.MenuItem
+import com.google.firebase.firestore.FirebaseFirestore
 import edu.rosehulman.attendancecheckoff.BarCodeActivity
+import edu.rosehulman.attendancecheckoff.CurrentState
 import edu.rosehulman.attendancecheckoff.R
 import edu.rosehulman.attendancecheckoff.club.history.HistoryFragment
 import edu.rosehulman.attendancecheckoff.club.members.MembersFragment
@@ -21,6 +23,7 @@ import edu.rosehulman.attendancecheckoff.club.officials.OfficialsFragment
 import edu.rosehulman.attendancecheckoff.club.personal.PersonalFragment
 import edu.rosehulman.attendancecheckoff.model.Club
 import edu.rosehulman.attendancecheckoff.model.Event
+import edu.rosehulman.attendancecheckoff.model.Official
 import edu.rosehulman.attendancecheckoff.util.*
 import edu.rosehulman.attendancecheckoff.util.Constants.BAR_CODE_REQUEST
 import kotlinx.android.synthetic.main.add_date.view.*
@@ -34,6 +37,10 @@ class ClubActivity : AppCompatActivity() {
     private var mSectionsPagerAdapter: SectionsPagerAdapter? = null
 
     lateinit var club: Club
+
+    val officialsRef by lazy { FirebaseFirestore.getInstance().collection(Official.KEY_COLLECTION) }
+
+    lateinit var activityMenu: Menu
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -54,12 +61,33 @@ class ClubActivity : AppCompatActivity() {
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
         menuInflater.inflate(R.menu.menu_club, menu)
+        activityMenu = menu
+        checkOfficial()
         return true
+    }
+
+    private fun checkOfficial() {
+        officialsRef.whereEqualTo(Official.KEY_USER_ID, CurrentState.user.id).addSnapshotListener { snapshot, exception ->
+            if (exception != null) {
+                return@addSnapshotListener
+            }
+            snapshot?.let {
+                if (snapshot.map { doc -> Official.fromSnapshot(doc) }.any { it.clubId == club.id}) {
+                    activityMenu.findItem(R.id.action_qrcode).isVisible = true
+                    activityMenu.findItem(R.id.action_export).isVisible = true
+                    activityMenu.findItem(R.id.action_add_event).isVisible = true
+                } else {
+                    activityMenu.findItem(R.id.action_qrcode).isVisible = false
+                    activityMenu.findItem(R.id.action_export).isVisible = false
+                    activityMenu.findItem(R.id.action_add_event).isVisible = false
+                }
+            }
+        }
+
     }
 
     override fun onOptionsItemSelected(item: MenuItem) =
         when (item.itemId) {
-            R.id.action_settings -> true
             R.id.action_qrcode -> {
                 Intent(this, BarCodeActivity::class.java).also { barCodeIntent ->
                     barCodeIntent.type = Intent.ACTION_VIEW

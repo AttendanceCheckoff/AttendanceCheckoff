@@ -90,7 +90,7 @@ class EventActivity : AppCompatActivity() {
             if (resultCode == Activity.RESULT_OK) {
                 val studentId = data?.getStringExtra(BarCodeActivity.KEY_DETECTED_VALUE)
                 studentId?.let { studentID ->
-                    FirebaseUtils.addUserToEvent(studentID, event)
+                    FirebaseUtils.addUserToEvent(this, studentID, event)
                 }
             }
         }
@@ -105,7 +105,7 @@ class EventActivity : AppCompatActivity() {
             .putExtra(CalendarContract.Events.DESCRIPTION, event.description)
             .putExtra(CalendarContract.Events.AVAILABILITY, CalendarContract.Events.AVAILABILITY_BUSY)
             .putExtra(CalendarContract.Reminders.MINUTES, 15)
-            .putExtra(Intent.EXTRA_EMAIL, CurrentState.user.username+"@rose-hulman.edu")
+            .putExtra(Intent.EXTRA_EMAIL, arrayOf(getString(R.string.email_domain, CurrentState.user.username)))
         startActivity(intent)
     }
 

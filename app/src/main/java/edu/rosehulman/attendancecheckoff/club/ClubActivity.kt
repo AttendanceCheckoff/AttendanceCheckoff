@@ -110,7 +110,7 @@ class ClubActivity : AppCompatActivity() {
                 val timestamp = view.Event_Time.getTimestamp(date)
                 Log.d(Constants.TAG, "Name: $name, Description: $description, Timestamp: $timestamp")
                 val event = Event(name = name, description = description, clubId = club.id, dateTime = timestamp)
-                FirebaseUtils.addEventToClub(club, event)
+                FirebaseUtils.addNewEventToClub(club, event)
             }
             setNegativeButton(android.R.string.cancel) { _, _ -> }
         }.create().show()

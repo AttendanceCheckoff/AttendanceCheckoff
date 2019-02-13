@@ -7,18 +7,16 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.QuerySnapshot
-import edu.rosehulman.attendancecheckoff.CurrentState
 import edu.rosehulman.attendancecheckoff.R
 import edu.rosehulman.attendancecheckoff.model.Event
-import edu.rosehulman.attendancecheckoff.model.Official
 import edu.rosehulman.attendancecheckoff.model.User
 import edu.rosehulman.attendancecheckoff.util.Constants
 
 class EventAdapter(val context: Context, val currentEvent: Event): RecyclerView.Adapter<EventHolder>() {
 
     val usersRef = FirebaseFirestore.getInstance().collection("users")
-
     val members = ArrayList<User>()
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): EventHolder {
         val view = LayoutInflater.from(context).inflate(R.layout.officials_member_item, parent, false)
         return EventHolder(view, this)
@@ -44,7 +42,6 @@ class EventAdapter(val context: Context, val currentEvent: Event): RecyclerView.
             }
     }
 
-
     fun populateLocalMembers(snapshot: QuerySnapshot?) {
         Log.d(Constants.TAG, "Populating Members")
         members.clear()
@@ -53,7 +50,4 @@ class EventAdapter(val context: Context, val currentEvent: Event): RecyclerView.
             notifyDataSetChanged()
         }
     }
-
-
-
 }

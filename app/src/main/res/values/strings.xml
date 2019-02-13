@@ -38,5 +38,10 @@
     <string name="action_add_event">Add Event</string>
     <string name="action_export">Export Data</string>
     <string name="email_subject">Attendance Checkoff Export</string>
+    <string name="hint_new_user_major">Major</string>
+    <string name="hint_new_user_year">Year</string>
+    <string name="hint_new_user_studentid">StudentID</string>
+    <string name="hint_new_user_name">Name</string>
+    <string name="hint_new_user_username">Username</string>
 
 </resources>

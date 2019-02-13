@@ -1,4 +1,4 @@
-package edu.rosehulman.attendancecheckoff
+package edu.rosehulman.clubhub
 
 import android.graphics.Bitmap
 import android.os.Bundle

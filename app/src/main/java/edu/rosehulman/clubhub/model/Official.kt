@@ -1,4 +1,4 @@
-package edu.rosehulman.attendancecheckoff.model
+package edu.rosehulman.clubhub.model
 
 import android.os.Parcel
 import android.os.Parcelable

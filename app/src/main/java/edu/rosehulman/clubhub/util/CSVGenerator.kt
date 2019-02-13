@@ -1,4 +1,4 @@
-package edu.rosehulman.attendancecheckoff.util
+package edu.rosehulman.clubhub.util
 
 import android.app.Activity
 import android.content.Intent
@@ -7,11 +7,11 @@ import android.os.Environment
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.Query
 import com.opencsv.CSVWriter
-import edu.rosehulman.attendancecheckoff.CurrentState
-import edu.rosehulman.attendancecheckoff.R
-import edu.rosehulman.attendancecheckoff.model.Club
-import edu.rosehulman.attendancecheckoff.model.Event
-import edu.rosehulman.attendancecheckoff.model.User
+import edu.rosehulman.clubhub.CurrentState
+import edu.rosehulman.clubhub.R
+import edu.rosehulman.clubhub.model.Club
+import edu.rosehulman.clubhub.model.Event
+import edu.rosehulman.clubhub.model.User
 import java.io.File
 import java.io.FileWriter
 

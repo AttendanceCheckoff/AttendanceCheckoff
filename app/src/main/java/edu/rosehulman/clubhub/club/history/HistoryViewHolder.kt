@@ -1,9 +1,9 @@
-package edu.rosehulman.attendancecheckoff.club.history
+package edu.rosehulman.clubhub.club.history
 
 import android.support.v7.widget.RecyclerView
 import android.view.View
-import edu.rosehulman.attendancecheckoff.model.Event
-import edu.rosehulman.attendancecheckoff.util.toReadableString
+import edu.rosehulman.clubhub.model.Event
+import edu.rosehulman.clubhub.util.toReadableString
 import kotlinx.android.synthetic.main.events_item.view.*
 
 class HistoryViewHolder(itemView: View, adapter: HistoryAdapter) : RecyclerView.ViewHolder(itemView) {

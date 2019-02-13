@@ -1,4 +1,4 @@
-package edu.rosehulman.attendancecheckoff.club.officials
+package edu.rosehulman.clubhub.club.officials
 
 import android.content.Context
 import android.content.Intent
@@ -8,11 +8,11 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.QuerySnapshot
-import edu.rosehulman.attendancecheckoff.R
-import edu.rosehulman.attendancecheckoff.model.Club
-import edu.rosehulman.attendancecheckoff.model.Official
-import edu.rosehulman.attendancecheckoff.model.User
-import edu.rosehulman.attendancecheckoff.util.Constants
+import edu.rosehulman.clubhub.R
+import edu.rosehulman.clubhub.model.Club
+import edu.rosehulman.clubhub.model.Official
+import edu.rosehulman.clubhub.model.User
+import edu.rosehulman.clubhub.util.Constants
 
 class OfficialsAdapter(var context: Context?) : RecyclerView.Adapter<OfficialsViewHolder>() {
 

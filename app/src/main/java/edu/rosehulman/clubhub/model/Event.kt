@@ -1,12 +1,12 @@
-package edu.rosehulman.attendancecheckoff.model
+package edu.rosehulman.clubhub.model
 
 import android.os.Parcel
 import android.os.Parcelable
 import com.google.firebase.Timestamp
 import com.google.firebase.firestore.DocumentSnapshot
 import com.google.firebase.firestore.Exclude
-import edu.rosehulman.attendancecheckoff.util.readStringArrayList
-import edu.rosehulman.attendancecheckoff.util.readTimeStamp
+import edu.rosehulman.clubhub.util.readStringArrayList
+import edu.rosehulman.clubhub.util.readTimeStamp
 
 data class Event(
     val name: String = "",

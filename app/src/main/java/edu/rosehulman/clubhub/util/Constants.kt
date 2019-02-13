@@ -1,4 +1,4 @@
-package edu.rosehulman.attendancecheckoff.util
+package edu.rosehulman.clubhub.util
 
 object Constants {
 

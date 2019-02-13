@@ -1,8 +1,8 @@
-package edu.rosehulman.attendancecheckoff.club.members
+package edu.rosehulman.clubhub.club.members
 
 import android.support.v7.widget.RecyclerView
 import android.view.View
-import edu.rosehulman.attendancecheckoff.model.User
+import edu.rosehulman.clubhub.model.User
 import kotlinx.android.synthetic.main.officials_member_item.view.*
 
 class MembersViewHolder(itemView: View, adapter: MembersAdapter) : RecyclerView.ViewHolder(itemView) {

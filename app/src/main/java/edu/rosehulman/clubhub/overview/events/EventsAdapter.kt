@@ -1,4 +1,4 @@
-package edu.rosehulman.attendancecheckoff.overview.events
+package edu.rosehulman.clubhub.overview.events
 
 import android.content.Context
 import android.content.Intent
@@ -13,13 +13,13 @@ import com.google.firebase.Timestamp
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.Query
 import com.google.firebase.firestore.QuerySnapshot
-import edu.rosehulman.attendancecheckoff.CurrentState
-import edu.rosehulman.attendancecheckoff.R
-import edu.rosehulman.attendancecheckoff.event.EventActivity
-import edu.rosehulman.attendancecheckoff.model.Club
-import edu.rosehulman.attendancecheckoff.model.Event
-import edu.rosehulman.attendancecheckoff.model.Official
-import edu.rosehulman.attendancecheckoff.util.Constants
+import edu.rosehulman.clubhub.CurrentState
+import edu.rosehulman.clubhub.R
+import edu.rosehulman.clubhub.event.EventActivity
+import edu.rosehulman.clubhub.model.Club
+import edu.rosehulman.clubhub.model.Event
+import edu.rosehulman.clubhub.model.Official
+import edu.rosehulman.clubhub.util.Constants
 
 class EventsAdapter(val context: Context?, val view: View) : RecyclerView.Adapter<EventsViewHolder>() {
 
@@ -76,6 +76,7 @@ class EventsAdapter(val context: Context?, val view: View) : RecyclerView.Adapte
                     Log.d(Constants.TAG, events.toString())
                 }
             }
+            events.sortBy { it.dateTime }
             notifyDataSetChanged()
         }
     }

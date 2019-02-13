@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">AttendanceCheckoff</string>
+    <string name="app_name">ClubHub</string>
 
     <string name="title_clubs">Clubs</string>
     <string name="title_events">Events</string>
@@ -43,5 +43,7 @@
     <string name="hint_new_user_studentid">StudentID</string>
     <string name="hint_new_user_name">Name</string>
     <string name="hint_new_user_username">Username</string>
+    <string name="event_time_text_default">CurrentTime</string>
+    <string name="action_reminder">Set Reminder</string>
 
 </resources>

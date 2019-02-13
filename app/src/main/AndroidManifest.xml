@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-          package="edu.rosehulman.attendancecheckoff">
+          package="edu.rosehulman.clubhub">
 
     <uses-permission android:name="android.permission.INTERNET"/>
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
@@ -17,13 +17,13 @@
                 android:name="com.google.firebase.ml.vision.DEPENDENCIES"
                 android:value="barcode"/>
         <activity
-                android:name=".BarCodeActivity"
+                android:name="edu.rosehulman.clubhub.BarCodeActivity"
                 android:configChanges="orientation|keyboardHidden|screenSize"
                 android:label="@string/title_activity_bar_code"
                 android:theme="@style/FullscreenTheme">
         </activity>
         <activity
-                android:name=".MainActivity"
+                android:name="edu.rosehulman.clubhub.MainActivity"
                 android:label="@string/app_name">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
@@ -32,14 +32,14 @@
             </intent-filter>
         </activity>
         <activity
-                android:name=".club.ClubActivity"
+                android:name="edu.rosehulman.clubhub.club.ClubActivity"
                 android:label="@string/title_activity_club"
-                android:parentActivityName=".MainActivity">
+                android:parentActivityName="edu.rosehulman.clubhub.MainActivity">
             <meta-data
                     android:name="android.support.PARENT_ACTIVITY"
-                    android:value="edu.rosehulman.attendancecheckoff.MainActivity"/>
+                    android:value="edu.rosehulman.clubhub.MainActivity"/>
         </activity>
-        <activity android:name=".event.EventActivity">
+        <activity android:name="edu.rosehulman.clubhub.event.EventActivity">
         </activity>
     </application>
 

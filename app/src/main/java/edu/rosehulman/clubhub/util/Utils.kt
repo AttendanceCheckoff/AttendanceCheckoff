@@ -1,6 +1,6 @@
-package edu.rosehulman.attendancecheckoff.util
+package edu.rosehulman.clubhub.util
 
-import edu.rosehulman.attendancecheckoff.model.User
+import edu.rosehulman.clubhub.model.User
 
 object Utils {
     val testUser = User(

@@ -1,8 +1,8 @@
-package edu.rosehulman.attendancecheckoff.overview.clubs
+package edu.rosehulman.clubhub.overview.clubs
 
 import android.support.v7.widget.RecyclerView
 import android.view.View
-import edu.rosehulman.attendancecheckoff.model.Club
+import edu.rosehulman.clubhub.model.Club
 import kotlinx.android.synthetic.main.club_item.view.*
 
 class ClubViewHolder(itemView: View, adapter: ClubsAdapter) : RecyclerView.ViewHolder(itemView) {

@@ -1,4 +1,4 @@
-package edu.rosehulman.attendancecheckoff.club
+package edu.rosehulman.clubhub.club
 
 import android.app.Activity
 import android.app.AlertDialog
@@ -14,18 +14,18 @@ import android.view.LayoutInflater
 import android.view.Menu
 import android.view.MenuItem
 import com.google.firebase.firestore.FirebaseFirestore
-import edu.rosehulman.attendancecheckoff.BarCodeActivity
-import edu.rosehulman.attendancecheckoff.CurrentState
-import edu.rosehulman.attendancecheckoff.R
-import edu.rosehulman.attendancecheckoff.club.history.HistoryFragment
-import edu.rosehulman.attendancecheckoff.club.members.MembersFragment
-import edu.rosehulman.attendancecheckoff.club.officials.OfficialsFragment
-import edu.rosehulman.attendancecheckoff.club.personal.PersonalFragment
-import edu.rosehulman.attendancecheckoff.model.Club
-import edu.rosehulman.attendancecheckoff.model.Event
-import edu.rosehulman.attendancecheckoff.model.Official
-import edu.rosehulman.attendancecheckoff.util.*
-import edu.rosehulman.attendancecheckoff.util.Constants.BAR_CODE_REQUEST
+import edu.rosehulman.clubhub.BarCodeActivity
+import edu.rosehulman.clubhub.CurrentState
+import edu.rosehulman.clubhub.R
+import edu.rosehulman.clubhub.club.history.HistoryFragment
+import edu.rosehulman.clubhub.club.members.MembersFragment
+import edu.rosehulman.clubhub.club.officials.OfficialsFragment
+import edu.rosehulman.clubhub.club.personal.PersonalFragment
+import edu.rosehulman.clubhub.model.Club
+import edu.rosehulman.clubhub.model.Event
+import edu.rosehulman.clubhub.model.Official
+import edu.rosehulman.clubhub.util.*
+import edu.rosehulman.clubhub.util.Constants.BAR_CODE_REQUEST
 import kotlinx.android.synthetic.main.add_date.view.*
 import kotlinx.android.synthetic.main.add_event.view.*
 import kotlinx.android.synthetic.main.add_time.view.*
@@ -136,7 +136,7 @@ class ClubActivity : AppCompatActivity() {
             setView(view)
             setPositiveButton(android.R.string.ok) { _, _ ->
                 val timestamp = view.Event_Time.getTimestamp(date)
-                Log.d(Constants.TAG, "Name: $name, Description: $description, Timestamp: $timestamp")
+                Log.d(Constants.TAG, "Name: $name, Description: $description, Timestamp: ${timestamp.toReadableString()}")
                 val event = Event(name = name, description = description, clubId = club.id, dateTime = timestamp)
                 FirebaseUtils.addNewEventToClub(club, event)
             }

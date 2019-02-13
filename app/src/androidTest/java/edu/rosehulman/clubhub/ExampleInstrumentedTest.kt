@@ -1,4 +1,4 @@
-package edu.rosehulman.attendancecheckoff
+package edu.rosehulman.clubhub
 
 import android.support.test.InstrumentationRegistry
 import android.support.test.runner.AndroidJUnit4

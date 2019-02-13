@@ -1,4 +1,4 @@
-package edu.rosehulman.attendancecheckoff
+package edu.rosehulman.clubhub
 
 import android.app.Activity
 import android.content.Intent
@@ -11,7 +11,7 @@ import com.google.firebase.ml.vision.FirebaseVision
 import com.google.firebase.ml.vision.barcode.FirebaseVisionBarcode.FORMAT_ALL_FORMATS
 import com.google.firebase.ml.vision.barcode.FirebaseVisionBarcodeDetectorOptions
 import com.google.firebase.ml.vision.common.FirebaseVisionImage
-import edu.rosehulman.attendancecheckoff.util.Constants
+import edu.rosehulman.clubhub.util.Constants
 import kotlinx.android.synthetic.main.bar_code_activity.*
 
 class BarCodeActivity : AppCompatActivity() {
@@ -47,17 +47,11 @@ class BarCodeActivity : AppCompatActivity() {
                         }
                 }
             }
-
             override fun onLongTap(cameraKitView: CameraKitView, v: Float, v1: Float) {
-
             }
-
             override fun onDoubleTap(cameraKitView: CameraKitView, v: Float, v1: Float) {
-
             }
-
             override fun onPinch(cameraKitView: CameraKitView, v: Float, v1: Float, v2: Float) {
-
             }
         }
     }

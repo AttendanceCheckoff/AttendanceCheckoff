@@ -1,4 +1,4 @@
-package edu.rosehulman.attendancecheckoff
+package edu.rosehulman.clubhub
 
 import org.junit.Test
 

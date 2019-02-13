@@ -1,4 +1,4 @@
-package edu.rosehulman.attendancecheckoff.club.history
+package edu.rosehulman.clubhub.club.history
 
 import android.content.Context
 import android.content.Intent
@@ -8,12 +8,13 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import com.google.firebase.Timestamp
 import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.firestore.Query
 import com.google.firebase.firestore.QuerySnapshot
-import edu.rosehulman.attendancecheckoff.R
-import edu.rosehulman.attendancecheckoff.event.EventActivity
-import edu.rosehulman.attendancecheckoff.model.Club
-import edu.rosehulman.attendancecheckoff.model.Event
-import edu.rosehulman.attendancecheckoff.util.Constants
+import edu.rosehulman.clubhub.R
+import edu.rosehulman.clubhub.event.EventActivity
+import edu.rosehulman.clubhub.model.Club
+import edu.rosehulman.clubhub.model.Event
+import edu.rosehulman.clubhub.util.Constants
 
 class HistoryAdapter(val context: Context?, val club: Club) : RecyclerView.Adapter<HistoryViewHolder>() {
 
@@ -41,6 +42,7 @@ class HistoryAdapter(val context: Context?, val club: Club) : RecyclerView.Adapt
 
     fun addSnapshotListener() {
         eventsRef
+            .orderBy(Event.KEY_DATE_TIME, Query.Direction.ASCENDING)
             .whereLessThanOrEqualTo(Event.KEY_DATE_TIME, Timestamp.now())
             .whereEqualTo(Event.KEY_CLUB_ID, club.id)
             .addSnapshotListener { snapshot, firestoreException ->

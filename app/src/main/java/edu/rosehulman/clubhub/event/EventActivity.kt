@@ -1,4 +1,4 @@
-package edu.rosehulman.attendancecheckoff.event
+package edu.rosehulman.clubhub.event
 
 import android.app.Activity
 import android.content.Intent
@@ -7,20 +7,19 @@ import android.provider.CalendarContract
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.DividerItemDecoration
 import android.support.v7.widget.LinearLayoutManager
-import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import com.google.firebase.Timestamp
 import com.google.firebase.firestore.FirebaseFirestore
-import edu.rosehulman.attendancecheckoff.BarCodeActivity
-import edu.rosehulman.attendancecheckoff.CurrentState
-import edu.rosehulman.attendancecheckoff.R
-import edu.rosehulman.attendancecheckoff.model.Event
-import edu.rosehulman.attendancecheckoff.model.Official
-import edu.rosehulman.attendancecheckoff.util.Constants
-import edu.rosehulman.attendancecheckoff.util.Constants.BAR_CODE_REQUEST
-import edu.rosehulman.attendancecheckoff.util.FirebaseUtils
-import edu.rosehulman.attendancecheckoff.util.toReadableString
+import edu.rosehulman.clubhub.BarCodeActivity
+import edu.rosehulman.clubhub.CurrentState
+import edu.rosehulman.clubhub.R
+import edu.rosehulman.clubhub.model.Event
+import edu.rosehulman.clubhub.model.Official
+import edu.rosehulman.clubhub.util.Constants
+import edu.rosehulman.clubhub.util.Constants.BAR_CODE_REQUEST
+import edu.rosehulman.clubhub.util.FirebaseUtils
+import edu.rosehulman.clubhub.util.toReadableString
 import kotlinx.android.synthetic.main.event_activity.*
 
 class EventActivity : AppCompatActivity() {
@@ -50,17 +49,6 @@ class EventActivity : AppCompatActivity() {
         attended_members.layoutManager = LinearLayoutManager(this)
         attended_members.adapter = adapter
         attended_members.addItemDecoration(DividerItemDecoration(this, LinearLayoutManager.VERTICAL))
-
-        if (event.dateTime < Timestamp.now()){
-            reminder.isClickable = false
-        }
-
-        reminder.setOnCheckedChangeListener { buttonView, isChecked ->
-            Log.d(Constants.TAG, isChecked.toString())
-            if (isChecked){
-                setNotification()
-            }
-        }
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
@@ -71,14 +59,18 @@ class EventActivity : AppCompatActivity() {
     }
 
     private fun checkOfficial() {
-        officialsRef.whereEqualTo(Official.KEY_USER_ID, CurrentState.user.id).addSnapshotListener { snapshot, exception ->
-            if (exception != null) {
-                return@addSnapshotListener
+        officialsRef.whereEqualTo(Official.KEY_USER_ID, CurrentState.user.id)
+            .addSnapshotListener { snapshot, exception ->
+                if (exception != null) {
+                    return@addSnapshotListener
+                }
+                snapshot?.let {
+                    activityMenu.findItem(R.id.action_qrcode).isVisible =
+                        snapshot.map { doc -> Official.fromSnapshot(doc) }.any { it.clubId == event.clubId }
+                }
             }
-            snapshot?.let {
-                activityMenu.findItem(R.id.action_qrcode).isVisible =
-                    snapshot.map { doc -> Official.fromSnapshot(doc) }.any { it.clubId == event.clubId}
-            }
+        if (event.dateTime < Timestamp.now()) {
+            activityMenu.findItem(R.id.action_reminder).isVisible = false
         }
     }
 
@@ -89,6 +81,10 @@ class EventActivity : AppCompatActivity() {
                     barCodeIntent.type = Intent.ACTION_VIEW
                     startActivityForResult(barCodeIntent, BAR_CODE_REQUEST)
                 }
+                true
+            }
+            R.id.action_reminder -> {
+                setNotification()
                 true
             }
             android.R.id.home -> {
@@ -109,7 +105,7 @@ class EventActivity : AppCompatActivity() {
         }
     }
 
-    private fun setNotification(){
+    private fun setNotification() {
         val startMillis = event.dateTime.seconds * 1000
         val intent = Intent(Intent.ACTION_INSERT)
             .setData(CalendarContract.Events.CONTENT_URI)
@@ -122,6 +118,6 @@ class EventActivity : AppCompatActivity() {
         startActivity(intent)
     }
 
-    private fun cancelNotification(){
+    private fun cancelNotification() {
     }
 }

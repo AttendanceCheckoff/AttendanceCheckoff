@@ -1,4 +1,4 @@
-package edu.rosehulman.attendancecheckoff.club.members
+package edu.rosehulman.clubhub.club.members
 
 import android.os.Bundle
 import android.support.v4.app.Fragment
@@ -8,8 +8,8 @@ import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import edu.rosehulman.attendancecheckoff.R
-import edu.rosehulman.attendancecheckoff.model.Club
+import edu.rosehulman.clubhub.R
+import edu.rosehulman.clubhub.model.Club
 
 const val ARG_CLUB = "club"
 

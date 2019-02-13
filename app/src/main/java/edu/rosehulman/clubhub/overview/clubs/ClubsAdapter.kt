@@ -1,4 +1,4 @@
-package edu.rosehulman.attendancecheckoff.overview.clubs
+package edu.rosehulman.clubhub.overview.clubs
 
 import android.content.Context
 import android.content.Intent
@@ -8,11 +8,11 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.QuerySnapshot
-import edu.rosehulman.attendancecheckoff.CurrentState
-import edu.rosehulman.attendancecheckoff.R
-import edu.rosehulman.attendancecheckoff.club.ClubActivity
-import edu.rosehulman.attendancecheckoff.model.Club
-import edu.rosehulman.attendancecheckoff.util.Constants
+import edu.rosehulman.clubhub.CurrentState
+import edu.rosehulman.clubhub.R
+import edu.rosehulman.clubhub.club.ClubActivity
+import edu.rosehulman.clubhub.model.Club
+import edu.rosehulman.clubhub.util.Constants
 
 class ClubsAdapter(val context: Context?) : RecyclerView.Adapter<ClubViewHolder>() {
 

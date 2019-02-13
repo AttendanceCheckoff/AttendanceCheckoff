@@ -1,4 +1,4 @@
-package edu.rosehulman.attendancecheckoff.event
+package edu.rosehulman.clubhub.event
 
 import android.content.Context
 import android.content.Intent
@@ -8,10 +8,10 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.QuerySnapshot
-import edu.rosehulman.attendancecheckoff.R
-import edu.rosehulman.attendancecheckoff.model.Event
-import edu.rosehulman.attendancecheckoff.model.User
-import edu.rosehulman.attendancecheckoff.util.Constants
+import edu.rosehulman.clubhub.R
+import edu.rosehulman.clubhub.model.Event
+import edu.rosehulman.clubhub.model.User
+import edu.rosehulman.clubhub.util.Constants
 
 class EventAdapter(val context: Context, val currentEvent: Event): RecyclerView.Adapter<EventHolder>() {
 

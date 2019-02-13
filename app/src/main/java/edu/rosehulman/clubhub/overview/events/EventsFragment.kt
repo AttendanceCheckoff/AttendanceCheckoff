@@ -1,4 +1,4 @@
-package edu.rosehulman.attendancecheckoff.overview.events
+package edu.rosehulman.clubhub.overview.events
 
 import android.os.Bundle
 import android.support.v4.app.Fragment
@@ -10,7 +10,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import edu.rosehulman.attendancecheckoff.R
+import edu.rosehulman.clubhub.R
 import kotlinx.android.synthetic.main.fragment_recycler_view.view.*
 
 class EventsFragment : Fragment() {

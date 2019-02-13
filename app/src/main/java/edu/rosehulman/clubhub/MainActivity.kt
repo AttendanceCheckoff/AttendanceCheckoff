@@ -1,4 +1,4 @@
-package edu.rosehulman.attendancecheckoff
+package edu.rosehulman.clubhub
 
 import android.content.Intent
 import android.os.Bundle
@@ -12,13 +12,13 @@ import com.google.firebase.Timestamp
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.firestore.FirebaseFirestore
-import edu.rosehulman.attendancecheckoff.model.Event
-import edu.rosehulman.attendancecheckoff.model.User
-import edu.rosehulman.attendancecheckoff.overview.clubs.ClubsFragment
-import edu.rosehulman.attendancecheckoff.overview.events.EventsFragment
-import edu.rosehulman.attendancecheckoff.util.Constants
-import edu.rosehulman.attendancecheckoff.util.Constants.RC_ROSEFIRE_LOGIN
-import edu.rosehulman.attendancecheckoff.util.FirebaseUtils
+import edu.rosehulman.clubhub.model.Event
+import edu.rosehulman.clubhub.model.User
+import edu.rosehulman.clubhub.overview.clubs.ClubsFragment
+import edu.rosehulman.clubhub.overview.events.EventsFragment
+import edu.rosehulman.clubhub.util.Constants
+import edu.rosehulman.clubhub.util.Constants.RC_ROSEFIRE_LOGIN
+import edu.rosehulman.clubhub.util.FirebaseUtils
 import edu.rosehulman.rosefire.Rosefire
 import kotlinx.android.synthetic.main.main_activity.*
 import java.util.*

@@ -1,16 +1,14 @@
-package edu.rosehulman.attendancecheckoff.club.history
+package edu.rosehulman.clubhub.club.history
 
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.support.v7.widget.DividerItemDecoration
 import android.support.v7.widget.LinearLayoutManager
-import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import edu.rosehulman.attendancecheckoff.R
-import edu.rosehulman.attendancecheckoff.club.personal.PersonalAdapter
-import edu.rosehulman.attendancecheckoff.model.Club
+import edu.rosehulman.clubhub.R
+import edu.rosehulman.clubhub.model.Club
 import kotlinx.android.synthetic.main.fragment_recycler_view.view.*
 
 const val ARG_CLUB = "ARG_CLUB"

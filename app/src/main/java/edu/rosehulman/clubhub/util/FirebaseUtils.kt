@@ -1,13 +1,13 @@
-package edu.rosehulman.attendancecheckoff.util
+package edu.rosehulman.clubhub.util
 
 import android.app.AlertDialog
 import android.content.Context
 import android.view.LayoutInflater
 import com.google.firebase.firestore.FirebaseFirestore
-import edu.rosehulman.attendancecheckoff.R
-import edu.rosehulman.attendancecheckoff.model.Club
-import edu.rosehulman.attendancecheckoff.model.Event
-import edu.rosehulman.attendancecheckoff.model.User
+import edu.rosehulman.clubhub.R
+import edu.rosehulman.clubhub.model.Club
+import edu.rosehulman.clubhub.model.Event
+import edu.rosehulman.clubhub.model.User
 import kotlinx.android.synthetic.main.add_new_user.view.*
 
 object FirebaseUtils {

@@ -1,7 +1,6 @@
-package edu.rosehulman.attendancecheckoff.util
+package edu.rosehulman.clubhub.util
 
 import android.os.Parcel
-import android.util.Log
 import android.widget.DatePicker
 import android.widget.TimePicker
 import com.google.firebase.Timestamp
@@ -13,7 +12,7 @@ fun Parcel.readStringArrayList(): ArrayList<String> = this.readArrayList(String:
 fun Parcel.readTimeStamp() = Timestamp(Date(this.readLong()))
 
 fun Timestamp.toReadableString(): String {
-    val sdf = SimpleDateFormat("dd/MM/yy HH:mm:ss", Locale.US)
+    val sdf = SimpleDateFormat("MM/dd/yy HH:mm:ss", Locale.US)
     return sdf.format(this.seconds*1000)
 }
 
@@ -25,9 +24,9 @@ fun DatePicker.getDate(): Date {
 }
 
 fun TimePicker.getTimestamp(date: Date): Timestamp {
-    Calendar.getInstance().apply {
-        set(date.year, date.month, date.day, hour, minute)
-        Log.d(Constants.TAG, "Date: $time")
-        return Timestamp(time)
-    }
+    date.hours = hour
+    date.minutes = minute
+    date.seconds = 0
+    return Timestamp(Date(date.time))
+
 }

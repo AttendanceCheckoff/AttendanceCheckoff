@@ -1,4 +1,4 @@
-package edu.rosehulman.attendancecheckoff.club.personal
+package edu.rosehulman.clubhub.club.personal
 
 import android.content.Context
 import android.content.Intent
@@ -8,12 +8,12 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.QuerySnapshot
-import edu.rosehulman.attendancecheckoff.CurrentState
-import edu.rosehulman.attendancecheckoff.R
-import edu.rosehulman.attendancecheckoff.event.EventActivity
-import edu.rosehulman.attendancecheckoff.model.Club
-import edu.rosehulman.attendancecheckoff.model.Event
-import edu.rosehulman.attendancecheckoff.util.Constants
+import edu.rosehulman.clubhub.CurrentState
+import edu.rosehulman.clubhub.R
+import edu.rosehulman.clubhub.event.EventActivity
+import edu.rosehulman.clubhub.model.Club
+import edu.rosehulman.clubhub.model.Event
+import edu.rosehulman.clubhub.util.Constants
 
 class PersonalAdapter(val context: Context?, val club: Club): RecyclerView.Adapter<PersonalHolder>() {
 

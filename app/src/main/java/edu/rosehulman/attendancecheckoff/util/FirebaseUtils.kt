@@ -18,21 +18,24 @@ object FirebaseUtils {
 
     fun addUserToEvent(context: Context, studentID: String, event: Event) {
         userRef.whereEqualTo(User.KEY_STUDENT_ID, studentID).get().addOnSuccessListener {
-            val user = User.fromSnapshot(it.documents.first())
-            user.attendedEvents.add(event.id)
-            userRef.document(user.id).set(user)
+            if (it.documents.isEmpty()) {
+                showNewUserDialog(context, studentID) { addNewUserToEvent(it, event) }
+            } else {
+                val user = User.fromSnapshot(it.documents.first())
+                user.attendedEvents.add(event.id)
+                userRef.document(user.id).set(user)
 
-            event.attendedMembers.add(user.id)
-            eventRef.document(event.id).set(event)
-        }.addOnFailureListener { exception ->
-            showNewUserDialog(context, studentID) { addNewUserToEvent(it, event) }
+                event.attendedMembers.add(user.id)
+                eventRef.document(event.id).set(event)
+            }
         }
     }
 
-    private fun showNewUserDialog(context: Context, studentID: String, addUserAction: (User) -> Unit) {
+    fun showNewUserDialog(context: Context, studentID: String, addUserAction: (User) -> Unit) {
         AlertDialog.Builder(context).apply {
             setTitle("We don't know you! Please complete this form")
             val view = LayoutInflater.from(context).inflate(R.layout.add_new_user, null, false)
+            setView(view)
             view.new_user_studentID.setText(studentID)
             setPositiveButton(android.R.string.ok) { _, _ ->
                 val user = User(
@@ -42,7 +45,6 @@ object FirebaseUtils {
                     major = view.new_user_major.text.toString(),
                     year = view.new_user_year.text.toString()
                 )
-
                 addUserAction(user)
             }
             setNegativeButton(android.R.string.cancel) { _, _ -> }
@@ -54,19 +56,22 @@ object FirebaseUtils {
         user.attendedEvents.add(event.id)
         userRef.add(user).addOnSuccessListener { ref ->
             event.attendedMembers.add(ref.id)
+            eventRef.document(event.id).set(event)
         }
     }
 
     fun addUserToClub(context: Context, studentID: String, club: Club) {
         userRef.whereEqualTo(User.KEY_STUDENT_ID, studentID).get().addOnSuccessListener {
-            val user = User.fromSnapshot(it.documents.first())
-            user.clubs.add(club.id)
-            userRef.document(user.id).set(user)
+            if (it.documents.isEmpty()) {
+                showNewUserDialog(context, studentID) { addNewUserToClub(it, club) }
+            } else {
+                val user = User.fromSnapshot(it.documents.first())
+                user.clubs.add(club.id)
+                userRef.document(user.id).set(user)
 
-            club.members.add(user.id)
-            clubRef.document(club.id).set(club)
-        }.addOnFailureListener { exception ->
-            showNewUserDialog(context, studentID) { addNewUserToClub(it, club) }
+                club.members.add(user.id)
+                clubRef.document(club.id).set(club)
+            }
         }
     }
 
@@ -74,6 +79,7 @@ object FirebaseUtils {
         user.clubs.add(club.id)
         userRef.add(user).addOnSuccessListener { ref ->
             club.members.add(ref.id)
+            clubRef.document(club.id).set(club)
         }
     }
 
@@ -82,5 +88,25 @@ object FirebaseUtils {
             club.events.add(doc.id)
             clubRef.document(club.id).set(club)
         }
+    }
+
+    fun showNewUserDialogWithUsername(context: Context, username: String, addUserAction: (User) -> Unit) {
+        AlertDialog.Builder(context).apply {
+            setTitle("We don't know you! Please complete this form")
+            val view = LayoutInflater.from(context).inflate(R.layout.add_new_user, null, false)
+            setView(view)
+            view.new_user_username.setText(username)
+            setPositiveButton(android.R.string.ok) { _, _ ->
+                val user = User(
+                    username = view.new_user_username.text.toString(),
+                    name = view.new_user_name.text.toString(),
+                    studentID = view.new_user_studentID.text.toString(),
+                    major = view.new_user_major.text.toString(),
+                    year = view.new_user_year.text.toString()
+                )
+                addUserAction(user)
+            }
+            setNegativeButton(android.R.string.cancel) { _, _ -> }
+        }.show()
     }
 }

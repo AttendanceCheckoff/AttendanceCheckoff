@@ -121,7 +121,7 @@ class ClubActivity : AppCompatActivity() {
             if (resultCode == Activity.RESULT_OK) {
                 val studentId = data?.getStringExtra(BarCodeActivity.KEY_DETECTED_VALUE)
                 studentId?.let { studentID ->
-                    FirebaseUtils.addUserToClub(studentID, club)
+                    FirebaseUtils.addUserToClub(this, studentID, club)
                 }
             }
         }

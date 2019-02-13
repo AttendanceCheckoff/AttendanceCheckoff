@@ -18,6 +18,7 @@ import edu.rosehulman.attendancecheckoff.overview.clubs.ClubsFragment
 import edu.rosehulman.attendancecheckoff.overview.events.EventsFragment
 import edu.rosehulman.attendancecheckoff.util.Constants
 import edu.rosehulman.attendancecheckoff.util.Constants.RC_ROSEFIRE_LOGIN
+import edu.rosehulman.attendancecheckoff.util.FirebaseUtils
 import edu.rosehulman.rosefire.Rosefire
 import kotlinx.android.synthetic.main.main_activity.*
 import java.util.*
@@ -116,15 +117,25 @@ class MainActivity : AppCompatActivity() {
 
     private fun switchToNavigation(user: FirebaseUser) {
         userRef.whereEqualTo(User.KEY_USERNAME, user.uid).get().addOnSuccessListener { snapshot ->
-            CurrentState.user = User.fromSnapshot(snapshot.documents.first())
-            supportActionBar?.title = CurrentState.user.name
+            if (snapshot.documents.isEmpty()) {
+                FirebaseUtils.showNewUserDialogWithUsername(this, user.uid) { user ->
+                    userRef.add(user)
+                    CurrentState.user = user
+                    supportActionBar?.title = CurrentState.user.name
 
-            supportFragmentManager.beginTransaction().replace(R.id.content, ClubsFragment()).commit()
+                    supportFragmentManager.beginTransaction().replace(R.id.content, ClubsFragment()).commit()
+                }
+            } else {
+                CurrentState.user = User.fromSnapshot(snapshot.documents.first())
+                supportActionBar?.title = CurrentState.user.name
+
+                supportFragmentManager.beginTransaction().replace(R.id.content, ClubsFragment()).commit()
+            }
         }
 
     }
 
-    private fun initializeData(){
+    private fun initializeData() {
         val date = Date(2019, 2, 11, 17, 0)
         eventsRef.add(Event("Test", Timestamp(date), "Test Notification", arrayListOf(), "PE8m5Y5kYmN6tMKx21mt"))
 //        eventsRef.add(Event("Team meeting", Timestamp.now(), "Deciding team roster", arrayListOf(), "XjEQEzGdBNkVgXvI6OKE"))

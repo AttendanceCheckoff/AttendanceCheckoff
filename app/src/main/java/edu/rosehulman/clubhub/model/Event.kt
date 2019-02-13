@@ -30,7 +30,7 @@ data class Event(
 
     override fun writeToParcel(parcel: Parcel, flags: Int) {
         parcel.writeString(name)
-        parcel.writeLong(dateTime.seconds)
+        parcel.writeLong(dateTime.seconds * 1000)
         parcel.writeString(description)
         parcel.writeList(attendedMembers)
         parcel.writeString(clubId)

@@ -20,6 +20,7 @@ import edu.rosehulman.attendancecheckoff.model.Official
 import edu.rosehulman.attendancecheckoff.util.Constants
 import edu.rosehulman.attendancecheckoff.util.Constants.BAR_CODE_REQUEST
 import edu.rosehulman.attendancecheckoff.util.FirebaseUtils
+import edu.rosehulman.attendancecheckoff.util.toReadableString
 import kotlinx.android.synthetic.main.event_activity.*
 
 class EventActivity : AppCompatActivity() {
@@ -42,6 +43,7 @@ class EventActivity : AppCompatActivity() {
         supportActionBar?.title = event.name
 
         event_description.text = event.description
+        event_time_text.text = event.dateTime.toReadableString()
 
         adapter = EventAdapter(this, event)
         adapter.addSnapshotListener()
@@ -108,7 +110,7 @@ class EventActivity : AppCompatActivity() {
     }
 
     private fun setNotification(){
-        val startMillis = event.dateTime.nanoseconds
+        val startMillis = event.dateTime.seconds * 1000
         val intent = Intent(Intent.ACTION_INSERT)
             .setData(CalendarContract.Events.CONTENT_URI)
             .putExtra(CalendarContract.EXTRA_EVENT_BEGIN_TIME, startMillis)

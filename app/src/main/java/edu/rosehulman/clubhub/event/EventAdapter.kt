@@ -1,6 +1,7 @@
 package edu.rosehulman.attendancecheckoff.event
 
 import android.content.Context
+import android.content.Intent
 import android.support.v7.widget.RecyclerView
 import android.util.Log
 import android.view.LayoutInflater
@@ -49,5 +50,13 @@ class EventAdapter(val context: Context, val currentEvent: Event): RecyclerView.
             members.addAll(it.map { doc -> User.fromSnapshot(doc) })
             notifyDataSetChanged()
         }
+    }
+
+    fun sendEmail(position: Int) {
+        val intent = Intent(Intent.ACTION_SEND).apply {
+            type = "plain/text"
+            putExtra(Intent.EXTRA_EMAIL, arrayOf(context.getString(R.string.email_domain, members[position].username)))
+        }
+        context.startActivity(intent)
     }
 }

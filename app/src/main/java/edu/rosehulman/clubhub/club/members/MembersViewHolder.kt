@@ -16,6 +16,7 @@ class MembersViewHolder(itemView: View, adapter: MembersAdapter) : RecyclerView.
     fun bind(member: User) {
         itemView.official_member_item_name.text = member.name
         itemView.profile_image.visibility = View.INVISIBLE
-        itemView.role.visibility= View.INVISIBLE
+        itemView.role.visibility = View.INVISIBLE
+        itemView.member_active.visibility = View.INVISIBLE
     }
 }
